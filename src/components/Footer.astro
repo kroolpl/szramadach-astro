@@ -4,26 +4,33 @@ const year = new Date().getFullYear();
 ---
 
 <footer
-    class="mt-24 lg:mt-40 bg-sheet-white border border-sheet-border p-8 lg:p-16 technical-sheet-shadow rounded-sm"
+    class="relative mt-24 lg:mt-40 bg-slate-ink text-white p-8 lg:p-16 rounded-sm overflow-hidden shadow-2xl border border-white/10"
 >
+    <!-- Subtle architectural grid background -->
     <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16"
+        class="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style="background-image: linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px); background-size: 24px 24px;"
+    >
+    </div>
+
+    <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 relative z-10 w-full max-w-[1440px] mx-auto"
     >
         <div class="space-y-6 lg:space-y-8">
             <h3
-                class="text-lg lg:text-xl font-black uppercase text-slate-ink border-l-[4px] lg:border-l-[6px] border-accent-orange pl-4 lg:pl-6 tracking-tight"
+                class="text-lg lg:text-xl font-black uppercase text-white border-l-[4px] lg:border-l-[6px] border-accent-orange pl-4 lg:pl-6 tracking-tight"
             >
                 SzramaDach
             </h3>
             <div
-                class="font-mono text-[11px] lg:text-[12px] space-y-4 text-slate-ink/80"
+                class="font-mono text-[11px] lg:text-[12px] space-y-4 text-white/80"
             >
                 <div class="flex items-start gap-3">
                     <MapPin
                         size={16}
                         className="text-accent-orange shrink-0 mt-0.5"
                     />
-                    <p class="leading-relaxed font-bold text-slate-ink">
+                    <p class="leading-relaxed font-bold text-white">
                         ul. Krakowska 123<br />
                         33-100 Tarnów<br />
                         NIP: 873-123-45-67
@@ -31,7 +38,7 @@ const year = new Date().getFullYear();
                 </div>
                 <div class="flex items-center gap-3">
                     <Clock size={16} className="text-accent-orange shrink-0" />
-                    <p class="font-bold text-slate-ink">
+                    <p class="font-bold text-white">
                         Pon - Pt: 7:00 - 16:00<br />Sobota: 7:00 - 13:00
                     </p>
                 </div>
@@ -40,15 +47,15 @@ const year = new Date().getFullYear();
 
         <div class="space-y-6 lg:space-y-8">
             <h3
-                class="text-lg lg:text-xl font-black uppercase text-slate-ink border-l-[4px] lg:border-l-[6px] border-accent-orange pl-4 lg:pl-6 tracking-tight"
+                class="text-lg lg:text-xl font-black uppercase text-white border-l-[4px] lg:border-l-[6px] border-accent-orange pl-4 lg:pl-6 tracking-tight"
             >
                 Dane Kontaktowe
             </h3>
             <div
-                class="font-mono text-[11px] lg:text-[12px] space-y-3 lg:space-y-4 text-slate-ink"
+                class="font-mono text-[11px] lg:text-[12px] space-y-3 lg:space-y-4 text-white"
             >
                 <div
-                    class="flex justify-between border-b border-gray-100 pb-3 items-center"
+                    class="flex justify-between border-b border-white/10 pb-3 items-center"
                 >
                     <div class="flex items-center gap-2 opacity-60">
                         <Mail size={14} />
@@ -56,12 +63,12 @@ const year = new Date().getFullYear();
                     </div>
                     <a
                         href="mailto:biuro@szramadach.pl"
-                        class="text-slate-ink font-bold hover:text-accent-orange transition-colors"
+                        class="text-white font-bold hover:text-accent-orange transition-colors duration-300"
                         >biuro@szramadach.pl</a
                     >
                 </div>
                 <div
-                    class="flex justify-between border-b border-gray-100 pb-3 items-center"
+                    class="flex justify-between border-b border-white/10 pb-3 items-center"
                 >
                     <div class="flex items-center gap-2 opacity-60">
                         <Phone size={14} />
@@ -69,12 +76,12 @@ const year = new Date().getFullYear();
                     </div>
                     <a
                         href="tel:+48500123456"
-                        class="text-slate-ink font-bold hover:text-accent-orange transition-colors"
+                        class="text-white font-bold hover:text-accent-orange transition-colors duration-300"
                         >+48 500 123 456</a
                     >
                 </div>
                 <div
-                    class="flex justify-between border-b border-gray-100 pb-3 items-center"
+                    class="flex justify-between border-b border-white/10 pb-3 items-center"
                 >
                     <div class="flex items-center gap-2 opacity-60">
                         <Phone size={14} />
@@ -82,7 +89,7 @@ const year = new Date().getFullYear();
                     </div>
                     <a
                         href="tel:+48146000000"
-                        class="text-slate-ink font-bold hover:text-accent-orange transition-colors"
+                        class="text-white font-bold hover:text-accent-orange transition-colors duration-300"
                         >+48 14 600 00 00</a
                     >
                 </div>
@@ -90,29 +97,29 @@ const year = new Date().getFullYear();
         </div>
 
         <div
-            class="flex flex-col items-start lg:items-center justify-center lg:border-l border-sheet-border pt-4 lg:pt-0 lg:pl-12"
+            class="flex flex-col items-start lg:items-center justify-center lg:border-l border-white/10 pt-4 lg:pt-0 lg:pl-12"
         >
             <div class="flex flex-row lg:flex-col items-center gap-6 lg:gap-0">
                 <div
-                    class="w-20 h-20 lg:w-32 lg:h-32 border-2 border-slate-ink p-2 lg:p-3 lg:mb-6 relative flex items-center justify-center bg-gray-50/50 shadow-inner hover:rotate-2 hover:scale-105 transition-all"
+                    class="w-20 h-20 lg:w-32 lg:h-32 border-2 border-white/20 p-2 lg:p-3 lg:mb-6 relative flex items-center justify-center bg-white/5 shadow-inner hover:rotate-2 hover:scale-105 transition-all"
                 >
                     <div
-                        class="absolute inset-1 border-dashed border border-slate-ink/30"
+                        class="absolute inset-1 border-dashed border border-white/20"
                     >
                     </div>
                     <BadgeCheck
-                        className="text-slate-ink w-8 h-8 lg:w-12 lg:h-12"
+                        className="text-accent-orange w-8 h-8 lg:w-12 lg:h-12"
                         strokeWidth={1.5}
                     />
                 </div>
                 <div class="text-left lg:text-center space-y-2">
                     <p
-                        class="font-mono text-[10px] lg:text-[11px] text-slate-ink uppercase tracking-[0.2em] font-black"
+                        class="font-mono text-[10px] lg:text-[11px] text-white uppercase tracking-[0.2em] font-black"
                     >
                         Certyfikowany Wykonawca
                     </p>
                     <p
-                        class="font-mono text-[9px] text-slate-ink/60 uppercase tracking-widest max-w-[200px]"
+                        class="font-mono text-[9px] text-white/50 uppercase tracking-widest max-w-[200px]"
                     >
                         Gwarancja jakości i bezpieczeństwa na lata
                     </p>
@@ -122,14 +129,18 @@ const year = new Date().getFullYear();
     </div>
 
     <div
-        class="mt-12 lg:mt-16 pt-8 lg:pt-10 border-t border-sheet-border flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] lg:text-[10px] font-mono text-slate-ink/50 uppercase tracking-widest font-bold text-center md:text-left"
+        class="mt-12 lg:mt-16 pt-8 lg:pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] lg:text-[10px] font-mono text-white/40 uppercase tracking-widest font-bold text-center md:text-left relative z-10 w-full max-w-[1440px] mx-auto"
     >
         <span>© {year} SzramaDach Tarnów. Wszelkie prawa zastrzeżone.</span>
         <div class="flex gap-6">
-            <a href="#" class="hover:text-accent-orange transition-colors"
+            <a
+                href="#"
+                class="hover:text-accent-orange transition-colors duration-300"
                 >Polityka Prywatności</a
             >
-            <a href="#" class="hover:text-accent-orange transition-colors"
+            <a
+                href="#"
+                class="hover:text-accent-orange transition-colors duration-300"
                 >Regulamin</a
             >
         </div>

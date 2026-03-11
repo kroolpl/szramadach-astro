@@ -26,11 +26,8 @@ export const Sheets: React.FC = () => {
             >
                 <nav className="flex flex-col gap-4">
                     {[
-                        { label: 'Start', href: '/#hero' },
-                        { label: 'O nas', href: '/#o-nas' },
-                        { label: 'Usługi', href: '/#uslugi' },
-                        { label: 'Proces', href: '/#proces' },
-                        { label: 'Zasięg', href: '/#zasieg' },
+                        { label: 'Start', href: '/' },
+                        { label: 'Oferta', href: '/oferta' },
                         { label: 'Realizacje', href: '/realizacje' },
                         { label: 'Porady', href: '/porady' }
                     ].map((item) => (

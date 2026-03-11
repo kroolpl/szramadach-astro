@@ -1,0 +1,80 @@
+---
+import { Ruler, FileText, Hammer, CheckCircle2 } from "lucide-react";
+
+const steps = [
+    {
+        step: "01",
+        title: "Bezpłatny obmiar",
+        icon: Ruler,
+        desc: "Przyjeżdżamy na miejsce, oceniamy stan dachu i doradzamy materiały.",
+    },
+    {
+        step: "02",
+        title: "Przejrzysta wycena",
+        icon: FileText,
+        desc: "Otrzymujesz kosztorys bez ukrytych kosztów.",
+    },
+    {
+        step: "03",
+        title: "Realizacja",
+        icon: Hammer,
+        desc: "Pracujemy sprawnie, dbając o czystość na placu budowy.",
+    },
+    {
+        step: "04",
+        title: "Odbiór",
+        icon: CheckCircle2,
+        desc: "Sprawdzasz efekt końcowy, a my sprzątamy po sobie.",
+    },
+];
+---
+
+<section
+    id="proces"
+    class="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm mt-24 lg:mt-40 scroll-mt-24 lg:scroll-mt-32"
+>
+    <div
+        class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider"
+    >
+        REF: PROCESS_03
+    </div>
+    <div class="space-y-4">
+        <p
+            class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]"
+        >
+            03 // WORKFLOW
+        </p>
+        <h2
+            class="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-slate-ink"
+        >
+            Jak działamy?
+        </h2>
+    </div>
+
+    <div
+        class="grid grid-cols-1 lg:grid-cols-4 gap-px bg-sheet-border border border-sheet-border technical-sheet-shadow rounded-sm overflow-hidden"
+    >
+        {
+            steps.map((item) => (
+                <div class="bg-sheet-white p-10 space-y-8 relative group hover:bg-gray-50 transition-colors">
+                    <div class="flex justify-between items-start">
+                        <span class="font-mono text-4xl font-black text-slate-ink/10 group-hover:text-accent-orange/20 transition-colors">
+                            {item.step}
+                        </span>
+                        <div class="text-accent-orange">
+                            <item.icon />
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-black uppercase tracking-tight text-slate-ink">
+                            {item.title}
+                        </h3>
+                        <p class="text-sm text-slate-ink/60 leading-relaxed font-medium">
+                            {item.desc}
+                        </p>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</section>

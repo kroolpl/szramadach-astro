@@ -1,0 +1,33 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="description"
+			content="Profesjonalne usługi dekarskie w Tarnowie i okolicach - SzramaDach. Solidne dachy na lata."
+		/>
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<ClientRouter />
+	</head>
+	<body>
+		<div class="noise-overlay"></div>
+		<slot />
+		<style is:global>
+			/* Any Astro-specific global styles can go here */
+		</style>
+	</body>
+</html>

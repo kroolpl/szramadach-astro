@@ -1,0 +1,115 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { Navigation } from "../../components/react/Navigation";
+import Footer from "../../components/Footer.astro";
+import { Sheets } from "../../components/react/Sheets";
+import { FloatingEstimateButton } from "../../components/react/FloatingEstimateButton";
+import { BackgroundElements } from "../../components/react/BackgroundElements";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog");
+    return posts.map((post) => ({
+        params: { slug: post.id },
+        props: post,
+    }));
+}
+type Props = CollectionEntry<"blog">;
+
+const post = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} - SzramaDach Tarnów`}>
+    <BackgroundElements client:load />
+
+    <div class="max-w-[1440px] mx-auto p-4 lg:p-8 relative z-10">
+        <Navigation client:load />
+
+        <main class="mt-12 lg:mt-24 max-w-4xl mx-auto">
+            <article
+                class="bg-sheet-white border border-sheet-border technical-sheet-shadow overflow-hidden rounded-sm"
+            >
+                <div
+                    class="relative aspect-[21/9] overflow-hidden bg-gray-100 border-b border-sheet-border"
+                >
+                    <img
+                        src={post.data.heroImage}
+                        alt={post.data.title}
+                        class="w-full h-full object-cover grayscale-[20%]"
+                        transition:name={`img-${post.id}`}
+                    />
+                    <div class="absolute inset-0 bg-slate-ink/5"></div>
+                </div>
+
+                <div class="p-8 lg:p-16 space-y-8">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="bg-accent-orange text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest"
+                            >
+                                BLOG // {
+                                    post.data.pubDate.toLocaleDateString(
+                                        "pl-PL"
+                                    )
+                                }
+                            </div>
+                            <span
+                                class="font-mono text-[10px] text-slate-ink/40 font-bold uppercase tracking-widest"
+                                >REF: ART_{post.id.toUpperCase()}
+                            </span>
+                        </div>
+                        <h1
+                            class="text-4xl lg:text-7xl font-black uppercase leading-[0.9] tracking-tighter text-slate-ink"
+                            transition:name={`title-${post.id}`}
+                        >
+                            {post.data.title}
+                        </h1>
+                    </div>
+
+                    <div class="h-px bg-sheet-border w-full"></div>
+
+                    <div
+                        class="prose prose-slate prose-lg max-w-none prose-headings:uppercase prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-slate-ink prose-p:text-slate-ink/80 prose-p:font-medium prose-p:leading-relaxed prose-li:text-slate-ink/80 prose-li:font-medium prose-strong:text-slate-ink prose-strong:font-black prose-img:rounded-sm prose-img:border prose-img:border-sheet-border prose-img:technical-sheet-shadow"
+                    >
+                        <Content />
+                    </div>
+
+                    <div
+                        class="pt-12 border-t border-dashed border-sheet-border flex justify-between items-center"
+                    >
+                        <a
+                            href="/porady"
+                            class="flex items-center gap-2 text-slate-ink font-black uppercase text-xs tracking-widest hover:text-accent-orange transition-colors group"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="rotate-180 group-hover:-translate-x-1 transition-transform"
+                                ><path d="m9 18 6-6-6-6"></path>
+                            </svg>
+                            Powrót do listy
+                        </a>
+                        <button
+                            class="bg-slate-ink text-white font-black px-6 py-4 uppercase text-[10px] tracking-widest hover:bg-accent-orange transition-colors rounded-sm shadow-lg"
+                        >
+                            Udostępnij artykuł
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <Footer />
+    </div>
+
+    <Sheets client:load />
+    <FloatingEstimateButton client:load />
+</Layout>

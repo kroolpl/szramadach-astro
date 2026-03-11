@@ -1,0 +1,75 @@
+---
+import { UserCheck, Clock, ShieldCheck, BadgeCheck } from "lucide-react";
+
+const features = [
+    {
+        icon: UserCheck,
+        title: "Lokalna ekipa",
+        desc: "Działamy w Tarnowie, Brzesku, Dębicy i okolicach. Jesteśmy zawsze blisko Ciebie.",
+    },
+    {
+        icon: Clock,
+        title: "Terminowość",
+        desc: "Szanujemy Twój czas. Umówiony termin to dla nas świętość.",
+    },
+    {
+        icon: ShieldCheck,
+        title: "Gwarancja jakości",
+        desc: "Na każdą naszą usługę otrzymasz pisemną gwarancję.",
+    },
+    {
+        icon: BadgeCheck,
+        title: "Brak kompromisów",
+        desc: "Nie uznajemy kompromisów w kwestii jakości materiałów i wykonania.",
+    },
+];
+---
+
+<section
+    id="o-nas"
+    class="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm mt-12 lg:mt-16 scroll-mt-24 lg:scroll-mt-32"
+>
+    <div
+        class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider"
+    >
+        REF: ABOUT_US_01
+    </div>
+    <div
+        class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-sheet-border pb-8"
+    >
+        <div class="space-y-4">
+            <p
+                class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]"
+            >
+                01 // DLACZEGO MY?
+            </p>
+            <h2
+                class="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-slate-ink"
+            >
+                Doświadczenie, któremu <br />możesz zaufać
+            </h2>
+        </div>
+        <p class="max-w-md text-slate-ink/60 font-medium text-lg">
+            Jesteśmy tarnowską firmą z wieloletnim stażem. Wiemy, że dach to
+            najważniejsza inwestycja w Twoim domu.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {
+            features.map((item) => (
+                <div class="p-8 bg-sheet-white border border-sheet-border technical-sheet-shadow space-y-6 rounded-sm hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 border border-sheet-border flex items-center justify-center bg-gray-50">
+                        <item.icon class="text-accent-orange" />
+                    </div>
+                    <h3 class="text-xl font-black uppercase tracking-tight text-slate-ink">
+                        {item.title}
+                    </h3>
+                    <p class="text-sm text-slate-ink/60 leading-relaxed font-medium">
+                        {item.desc}
+                    </p>
+                </div>
+            ))
+        }
+    </div>
+</section>

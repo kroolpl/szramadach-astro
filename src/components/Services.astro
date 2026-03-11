@@ -1,0 +1,97 @@
+---
+import { Hammer, Layers, Zap, Droplets, ChevronRight } from "lucide-react";
+
+const services = [
+    {
+        id: "SRV-01",
+        icon: Hammer,
+        title: "Montaż pokryć",
+        desc: "Układamy dachówkę ceramiczną, betonową, blachodachówkę oraz gonty bitumiczne.",
+    },
+    {
+        id: "SRV-02",
+        icon: Layers,
+        title: "Remonty i modernizacje",
+        desc: "Wymiana starego dachu na nowy (np. usuwanie eternitu) oraz wzmacnianie więźby.",
+    },
+    {
+        id: "SRV-03",
+        icon: Zap,
+        title: "Pogotowie dekarskie",
+        desc: "Szybka naprawa nieszczelności po wichurach i ulewach w regionie Tarnowa.",
+    },
+    {
+        id: "SRV-04",
+        icon: Droplets,
+        title: "Obróbki blacharskie",
+        desc: "Montaż rynien, okien dachowych oraz wykańczanie kominów.",
+    },
+];
+---
+
+<section
+    id="uslugi"
+    class="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm mt-24 lg:mt-40 scroll-mt-24 lg:scroll-mt-32"
+>
+    <div
+        class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider"
+    >
+        REF: SERVICES_02
+    </div>
+    <div class="space-y-4 text-center">
+        <p
+            class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]"
+        >
+            02 // NASZA OFERTA
+        </p>
+        <h2
+            class="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-slate-ink"
+        >
+            Kompleksowe rozwiązania dachowe
+        </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        {
+            services.map((row) => (
+                <div class="bg-sheet-white border border-sheet-border p-6 lg:p-8 flex flex-col gap-6 group relative overflow-hidden rounded-sm technical-sheet-shadow hover:translate-x-1 transition-all">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 border border-slate-ink flex items-center justify-center text-slate-ink group-hover:bg-accent-orange group-hover:text-white group-hover:border-accent-orange transition-all duration-300">
+                                <row.icon size={20} />
+                            </div>
+                            <div>
+                                <h3 class="text-lg lg:text-xl font-black uppercase tracking-tight text-slate-ink">
+                                    {row.title}
+                                </h3>
+                                <p class="font-mono text-[9px] text-slate-ink/40 uppercase tracking-widest font-bold">
+                                    {row.id} // TECHNICAL_SPEC
+                                </p>
+                            </div>
+                        </div>
+                        <div class="hidden sm:block font-mono text-[8px] text-accent-orange font-bold border border-accent-orange/20 px-2 py-1 rounded-full bg-accent-orange/5">
+                            STATUS: ACTIVE
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-sheet-border w-full relative">
+                        <div class="absolute top-0 left-0 h-full w-12 bg-accent-orange/30" />
+                    </div>
+
+                    <p class="text-slate-ink/70 font-medium text-sm lg:text-base leading-relaxed">
+                        {row.desc}
+                    </p>
+
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-dashed border-sheet-border">
+                        <span class="font-mono text-[9px] text-slate-ink/30 uppercase">
+                            Revision: 2.0.4
+                        </span>
+                        <button class="text-accent-orange font-black uppercase text-[10px] tracking-widest flex items-center gap-2 hover:translate-x-1 transition-transform">
+                            Szczegóły <ChevronRight size={14} />
+                        </button>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</section>

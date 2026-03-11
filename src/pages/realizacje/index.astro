@@ -1,4 +1,5 @@
 ---
+import "../../styles/global.css";
 import Layout from "../../layouts/Layout.astro";
 import { Navigation } from "../../components/react/Navigation";
 import Footer from "../../components/Footer.astro";
@@ -6,6 +7,14 @@ import { ProjectCard } from "../../components/react/ProjectCard";
 import { BackgroundElements } from "../../components/react/BackgroundElements";
 import { Sheets } from "../../components/react/Sheets";
 import { FloatingEstimateButton } from "../../components/react/FloatingEstimateButton";
+import { getImage } from "astro:assets";
+import willaImage from "../../assets/images/willa.png";
+
+const optimizedWilla = await getImage({
+    src: willaImage,
+    format: "webp",
+    width: 1200,
+});
 ---
 
 <Layout title="Nasze Realizacje - SzramaDach Tarnów">
@@ -36,13 +45,13 @@ import { FloatingEstimateButton } from "../../components/react/FloatingEstimateB
                     </p>
                 </div>
 
-                <div class="space-y-24 lg:space-y-40">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
                     <ProjectCard
                         client:visible
                         id="TRN_MOŚ_01"
                         title="Willa Mościce"
                         location="Tarnów / Sektor Mieszkalny"
-                        image="https://picsum.photos/seed/roof1/1200/800"
+                        image={optimizedWilla.src}
                         specs={[
                             {
                                 label: "Materiał_Pokrycia",
@@ -62,22 +71,6 @@ import { FloatingEstimateButton } from "../../components/react/FloatingEstimateB
                                 value: "240 m²",
                             },
                         ]}
-                        callouts={[
-                            {
-                                top: "25%",
-                                left: "35%",
-                                label: "Podwójny rąbek stojący",
-                                angle: 145,
-                                length: 120,
-                            },
-                            {
-                                top: "65%",
-                                left: "55%",
-                                label: "Zintegrowany system rynnowy",
-                                angle: -30,
-                                length: 110,
-                            },
-                        ]}
                     />
 
                     <ProjectCard
@@ -85,7 +78,6 @@ import { FloatingEstimateButton } from "../../components/react/FloatingEstimateB
                         id="TRN_STOD_37"
                         title="Nowoczesna Stodoła"
                         location="Okolice Tarnowa / Podmiejska"
-                        reversed
                         image="https://picsum.photos/seed/roof2/1200/800"
                         specs={[
                             {
@@ -100,15 +92,6 @@ import { FloatingEstimateButton } from "../../components/react/FloatingEstimateB
                                 label: "ID_Gwarancji",
                                 value: "DT-2024-WAR-09",
                                 highlight: true,
-                            },
-                        ]}
-                        callouts={[
-                            {
-                                top: "40%",
-                                left: "70%",
-                                label: "Profil retencyjny śniegu",
-                                angle: 25,
-                                length: 140,
                             },
                         ]}
                     />

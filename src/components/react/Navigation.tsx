@@ -37,6 +37,7 @@ export const Navigation: React.FC = () => {
 
                 <nav className="hidden lg:flex px-5 py-3 lg:px-10 lg:py-4 items-center gap-6 lg:gap-8 uppercase font-bold text-[9px] lg:text-[10px] text-slate-ink tracking-widest overflow-x-auto no-scrollbar">
                     {[
+                        { label: 'Start', href: '/' },
                         { label: 'Realizacje', href: '/realizacje' },
                         { label: 'Porady', href: '/porady' }
                     ].map((item) => (

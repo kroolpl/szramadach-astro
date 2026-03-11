@@ -30,7 +30,8 @@ export const Sheets: React.FC = () => {
                         { label: 'O nas', href: '/#o-nas' },
                         { label: 'Usługi', href: '/#uslugi' },
                         { label: 'Proces', href: '/#proces' },
-                        { label: 'Realizacje', href: '/#realizacje' },
+                        { label: 'Zasięg', href: '/#zasieg' },
+                        { label: 'Realizacje', href: '/realizacje' },
                         { label: 'Porady', href: '/porady' }
                     ].map((item) => (
                         <a

@@ -1,0 +1,124 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Navigation } from "../../components/react/Navigation";
+import Footer from "../../components/Footer.astro";
+import { ProjectCard } from "../../components/react/ProjectCard";
+import { BackgroundElements } from "../../components/react/BackgroundElements";
+import { Sheets } from "../../components/react/Sheets";
+import { FloatingEstimateButton } from "../../components/react/FloatingEstimateButton";
+---
+
+<Layout title="Nasze Realizacje - SzramaDach Tarnów">
+    <BackgroundElements client:load />
+
+    <div class="max-w-[1440px] mx-auto p-4 lg:p-8 relative z-10">
+        <Navigation client:load />
+
+        <main class="space-y-24 lg:space-y-40 pt-16">
+            <section id="realizacje" class="space-y-16">
+                <div class="space-y-4">
+                    <p
+                        class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]"
+                    >
+                        04 // PORTFOLIO
+                    </p>
+                    <h1
+                        class="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-slate-ink"
+                    >
+                        Nasze realizacje
+                    </h1>
+                    <p
+                        class="text-slate-ink/70 font-medium text-lg leading-relaxed max-w-2xl"
+                    >
+                        Przegląd naszych kluczowych projektów. Dowody naszej
+                        wiedzy, precyzji i inżynierskiego podejścia do wykonania
+                        każdego dachu.
+                    </p>
+                </div>
+
+                <div class="space-y-24 lg:space-y-40">
+                    <ProjectCard
+                        client:visible
+                        id="TRN_MOŚ_01"
+                        title="Willa Mościce"
+                        location="Tarnów / Sektor Mieszkalny"
+                        image="https://picsum.photos/seed/roof1/1200/800"
+                        specs={[
+                            {
+                                label: "Materiał_Pokrycia",
+                                value: "Dachówka Ceramiczna Premium",
+                            },
+                            {
+                                label: "Nachylenie_Połaci",
+                                value: "35.0° Zweryfikowane",
+                            },
+                            {
+                                label: "Audyt_Techniczny",
+                                value: "Pozytywny / Certyfikowany",
+                                highlight: true,
+                            },
+                            {
+                                label: "Powierzchnia_Całkowita",
+                                value: "240 m²",
+                            },
+                        ]}
+                        callouts={[
+                            {
+                                top: "25%",
+                                left: "35%",
+                                label: "Podwójny rąbek stojący",
+                                angle: 145,
+                                length: 120,
+                            },
+                            {
+                                top: "65%",
+                                left: "55%",
+                                label: "Zintegrowany system rynnowy",
+                                angle: -30,
+                                length: 110,
+                            },
+                        ]}
+                    />
+
+                    <ProjectCard
+                        client:visible
+                        id="TRN_STOD_37"
+                        title="Nowoczesna Stodoła"
+                        location="Okolice Tarnowa / Podmiejska"
+                        reversed
+                        image="https://picsum.photos/seed/roof2/1200/800"
+                        specs={[
+                            {
+                                label: "Typ_Elewacji",
+                                value: "Blacha na Rąbek Antracyt",
+                            },
+                            {
+                                label: "Rdzeń_Izolacji",
+                                value: "PIR 120mm Sztywny",
+                            },
+                            {
+                                label: "ID_Gwarancji",
+                                value: "DT-2024-WAR-09",
+                                highlight: true,
+                            },
+                        ]}
+                        callouts={[
+                            {
+                                top: "40%",
+                                left: "70%",
+                                label: "Profil retencyjny śniegu",
+                                angle: 25,
+                                length: 140,
+                            },
+                        ]}
+                    />
+                </div>
+            </section>
+        </main>
+
+        <Footer />
+    </div>
+
+    <Sheets client:load />
+    <FloatingEstimateButton client:load />
+</Layout>

@@ -1,0 +1,100 @@
+---
+// Coverage.astro - Wraps the Leaflet CoverageMap React island
+import { CoverageMap } from "./react/CoverageMap";
+---
+
+<section
+    id="zasieg"
+    class="space-y-0 relative bg-sheet-white border border-sheet-border technical-sheet-shadow rounded-sm scroll-mt-24 lg:scroll-mt-32 overflow-hidden"
+>
+    <!-- Tab label -->
+    <div
+        class="absolute -top-[32px] left-8 h-[32px] w-56 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider z-10"
+    >
+        REF: COVERAGE_05
+    </div>
+
+    <!-- Header -->
+    <div
+        class="p-8 lg:p-16 pb-0 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end"
+    >
+        <div class="space-y-4">
+            <p
+                class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]"
+            >
+                05 // ZASIĘG DZIAŁANIA
+            </p>
+            <h2
+                class="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-slate-ink"
+            >
+                Działamy w promieniu<br />
+                <span class="text-accent-orange">100 km</span> od Tarnowa
+            </h2>
+        </div>
+        <div class="space-y-6 pb-1">
+            <p class="text-slate-ink/70 font-medium text-lg leading-relaxed">
+                Obsługujemy cały region – od Krakowa, przez Brzesko, Dębicę, aż
+                po Nowy Sącz i okolice. Gwarantujemy szybki dojazd i terminową
+                realizację niezależnie od lokalizacji.
+            </p>
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-4">
+                {
+                    [
+                        { value: "100 km", label: "Promień działania" },
+                        { value: "8+", label: "Głównych miast" },
+                        { value: "24h", label: "Czas reakcji" },
+                    ].map((stat) => (
+                        <div class="border border-sheet-border p-4 bg-gray-50/50 space-y-1">
+                            <p class="font-black text-2xl text-slate-ink">
+                                {stat.value}
+                            </p>
+                            <p class="font-mono text-[9px] uppercase text-slate-ink/50 tracking-wider font-bold">
+                                {stat.label}
+                            </p>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Map -->
+    <div
+        class="relative mt-8 border-t border-sheet-border"
+        style="height: 480px;"
+    >
+        <!-- Leaflet CSS loaded inline to avoid FOUC -->
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            crossorigin=""
+        />
+        <!-- Custom overrides for tooltip borders -->
+        <style>
+            .leaflet-tooltip-clean {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+            .leaflet-tooltip-clean::before {
+                display: none !important;
+            }
+        </style>
+
+        <CoverageMap client:visible />
+
+        <!-- Corner annotation labels -->
+        <div
+            class="absolute top-3 left-3 z-[500] font-mono text-[9px] uppercase text-slate-ink/40 font-bold tracking-widest pointer-events-none"
+        >
+            MAP_REF: POL_100KM_v2
+        </div>
+        <div
+            class="absolute bottom-3 right-3 z-[500] font-mono text-[9px] uppercase text-slate-ink/40 font-bold tracking-widest pointer-events-none"
+        >
+            © OpenStreetMap / CartoDB
+        </div>
+    </div>
+</section>

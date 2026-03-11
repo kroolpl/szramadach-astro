@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import React, { useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { 
   Quote, 
   BadgeCheck, 
@@ -53,8 +53,17 @@ const ProjectCard = ({
   reversed?: boolean;
   callouts?: { top: string; left: string; label: string; angle: number; length: number }[];
 }) => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
   return (
     <motion.section 
+      ref={containerRef}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -68,15 +77,20 @@ const ProjectCard = ({
       <div className={`flex flex-col ${reversed ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
         {/* Image Section */}
         <div className="relative overflow-hidden group bg-gray-200 aspect-[4/3] lg:aspect-auto lg:w-2/3 lg:min-h-[640px]">
-          <motion.img 
-            initial={{ scale: 1.05 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            alt={title} 
-            className="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:opacity-100 transition-all duration-1000 grayscale-[20%] group-hover:grayscale-0" 
-            src={image}
-            referrerPolicy="no-referrer"
-          />
+          <motion.div 
+            style={{ y }}
+            className="absolute inset-0 w-full h-[120%] -top-[10%]"
+          >
+            <motion.img 
+              initial={{ scale: 1.05 }}
+              whileInView={{ scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              alt={title} 
+              className="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:opacity-100 transition-all duration-1000 grayscale-[20%] group-hover:grayscale-0" 
+              src={image}
+              referrerPolicy="no-referrer"
+            />
+          </motion.div>
           
           {/* Callouts - Hidden on very small screens to avoid clutter, visible from md up */}
           <div className="hidden md:block">
@@ -115,10 +129,6 @@ const ProjectCard = ({
                 </motion.div>
               </div>
             ))}
-          </div>
-
-          <div className="absolute bottom-4 left-4 lg:bottom-8 lg:left-8 font-mono text-[8px] lg:text-[10px] text-slate-ink bg-white/90 px-2 lg:px-3 py-1 lg:py-1.5 border border-slate-ink/20 shadow-sm backdrop-blur-sm font-bold">
-            COORD_X: {(Math.random() * 100).toFixed(3)} // COORD_Y: {(Math.random() * 100).toFixed(3)}
           </div>
         </div>
 
@@ -178,6 +188,14 @@ export default function App() {
   const [isFormOpen, setIsFormOpen] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 0.3], ["0%", "15%"]);
+  const bgTextY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const bgTextYReverse = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
+  const bgNumberY = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]);
+  const bgDriftX = useTransform(scrollYProgress, [0, 1], ["0px", "150px"]);
+  const bgDriftXReverse = useTransform(scrollYProgress, [0, 1], ["0px", "-150px"]);
+
   React.useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
@@ -192,24 +210,50 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen pb-24 font-sans selection:bg-accent-orange selection:text-white relative">
+    <div className="min-h-screen pb-24 font-sans selection:bg-accent-orange selection:text-white relative overflow-x-hidden">
       <div className="noise-overlay" />
       
-      {/* Background Labels */}
-      <div className="fixed inset-0 pointer-events-none z-50 p-4 flex justify-between opacity-40 text-[9px] font-mono uppercase text-slate-ink/40">
-        <div className="flex flex-col justify-between h-full">
-          <span>REF_ARC_01 // SYSTEM_READY</span>
-          <span>REF_ARC_02 // BUFFER_LOADED</span>
-          <span>REF_ARC_03 // ASSET_SYNC</span>
-          <span>REF_ARC_04 // STABLE_BUILD</span>
-        </div>
-        <div className="flex flex-col justify-between h-full text-right">
-          <span>COORD_X // 50.012</span>
-          <span>COORD_Y // 20.988</span>
-          <span>COORD_Z // 4.8.2</span>
-          <span>COORD_W // 0xBF4492</span>
-        </div>
+      {/* Parallax Background Text */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <motion.div 
+          style={{ y: bgTextY }}
+          className="absolute -left-20 top-20 text-[20vw] font-black text-slate-ink/[0.02] leading-none select-none uppercase"
+        >
+          SzramaDach
+        </motion.div>
+        <motion.div 
+          style={{ y: bgTextYReverse }}
+          className="absolute -right-20 bottom-40 text-[15vw] font-black text-slate-ink/[0.02] leading-none select-none uppercase text-right"
+        >
+          Dekarstwo
+        </motion.div>
+        
+        {/* Floating Background Numbers */}
+        <motion.div 
+          style={{ y: bgNumberY }}
+          className="absolute left-[10%] top-[40%] text-[30vw] font-black text-slate-ink/[0.01] leading-none select-none"
+        >
+          01
+        </motion.div>
+        <motion.div 
+          style={{ y: bgTextY }}
+          className="absolute right-[5%] top-[70%] text-[25vw] font-black text-slate-ink/[0.01] leading-none select-none"
+        >
+          02
+        </motion.div>
+
+        {/* Decorative Floating Shapes */}
+        <motion.div 
+          style={{ x: bgDriftX, y: bgNumberY }}
+          className="absolute left-[20%] top-[15%] w-64 h-64 border border-accent-orange/[0.03] rounded-full"
+        />
+        <motion.div 
+          style={{ x: bgDriftXReverse, y: bgTextYReverse }}
+          className="absolute right-[15%] top-[50%] w-96 h-96 border border-slate-ink/[0.02] rotate-45"
+        />
       </div>
+
+      {/* Background Labels - Removed */}
 
       {/* Floating Action Button */}
       <AnimatePresence>
@@ -239,7 +283,7 @@ export default function App() {
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
         title="Nawigacja"
-        description="Wybierz sekcję dokumentacji // v2.0"
+        description="Wybierz sekcję"
         side="right"
       >
         <nav className="flex flex-col gap-4">
@@ -280,7 +324,7 @@ export default function App() {
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
         title="Bezpłatna Wycena"
-        description="Złóż zapytanie o audyt techniczny // v2.0"
+        description="Złóż zapytanie o wycenę"
       >
         <div className="space-y-6">
           <div className="space-y-4">
@@ -366,7 +410,7 @@ export default function App() {
                 </motion.div>
                 <div>
                   <h1 className="text-xl lg:text-2xl font-black uppercase tracking-tight leading-none text-slate-ink">SzramaDach</h1>
-                  <p className="font-mono text-[8px] lg:text-[9px] mt-1 text-slate-ink/60 uppercase tracking-[0.15em] font-medium">Dachy Tarnów // Phase: SLATE_ORANGE</p>
+                  <p className="font-mono text-[8px] lg:text-[9px] mt-1 text-slate-ink/60 uppercase tracking-[0.15em] font-medium">Dachy Tarnów</p>
                 </div>
               </div>
 
@@ -397,12 +441,6 @@ export default function App() {
                 </a>
               ))}
             </nav>
-
-            <div className="hidden xl:flex px-6 py-4 font-mono text-[9px] items-center gap-6 bg-gray-50/50 text-slate-ink border-l border-sheet-border">
-              <p className="flex gap-2"><span>LOC:</span> <span className="text-accent-orange font-bold uppercase">Tarnów, PL</span></p>
-              <p className="flex gap-2"><span>STATUS:</span> <span className="text-accent-orange font-bold uppercase">Archive_Ready</span></p>
-              <p className="flex gap-2"><span>REV:</span> <span className="font-bold text-slate-ink uppercase">v2.0.Slate</span></p>
-            </div>
           </div>
         </motion.header>
 
@@ -412,14 +450,7 @@ export default function App() {
           <section id="hero" className="relative pt-12 lg:pt-20">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               <div className="lg:col-span-7 space-y-8">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="inline-flex items-center gap-3 px-4 py-2 bg-slate-ink text-white font-mono text-[10px] uppercase tracking-[0.2em] rounded-sm"
-                >
-                  <span className="w-2 h-2 rounded-full bg-accent-orange animate-pulse" />
-                  System Status: Active // Tarnów_Region
-                </motion.div>
+                {/* System Status Indicator Removed */}
                 
                 <motion.h1 
                   initial={{ opacity: 0, y: 20 }}
@@ -472,12 +503,17 @@ export default function App() {
                   transition={{ delay: 0.5, duration: 1 }}
                   className="aspect-square bg-gray-100 border border-sheet-border relative overflow-hidden rounded-sm technical-sheet-shadow"
                 >
-                  <img 
-                    src="https://picsum.photos/seed/roofing/800/800" 
-                    alt="Roofing Detail" 
-                    className="w-full h-full object-cover mix-blend-multiply opacity-80 grayscale-[30%]"
-                    referrerPolicy="no-referrer"
-                  />
+                  <motion.div 
+                    style={{ y: heroY }}
+                    className="absolute inset-0 w-full h-[120%] -top-[10%]"
+                  >
+                    <img 
+                      src="https://picsum.photos/seed/roofing/800/800" 
+                      alt="Roofing Detail" 
+                      className="w-full h-full object-cover mix-blend-multiply opacity-80 grayscale-[30%]"
+                      referrerPolicy="no-referrer"
+                    />
+                  </motion.div>
                   <div className="absolute inset-0 border-[20px] border-white/10 pointer-events-none" />
                   <div className="absolute top-4 right-4 font-mono text-[10px] text-slate-ink/40 uppercase">
                     IMG_REF: DT_HERO_01
@@ -505,7 +541,13 @@ export default function App() {
           </section>
 
           {/* 2. O nas Section */}
-          <section id="o-nas" className="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm">
+          <motion.section 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            id="o-nas" 
+            className="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm"
+          >
             <div className="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider">
               REF: ABOUT_US_01
             </div>
@@ -555,10 +597,16 @@ export default function App() {
                 </motion.div>
               ))}
             </div>
-          </section>
+          </motion.section>
 
           {/* 3. Usługi Section */}
-          <section id="uslugi" className="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm">
+          <motion.section 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            id="uslugi" 
+            className="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm"
+          >
             <div className="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider">
               REF: SERVICES_02
             </div>
@@ -614,10 +662,16 @@ export default function App() {
                 </motion.div>
               ))}
             </div>
-          </section>
+          </motion.section>
 
           {/* 4. Jak działamy Section */}
-          <section id="proces" className="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm">
+          <motion.section 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            id="proces" 
+            className="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm"
+          >
             <div className="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider">
               REF: PROCESS_03
             </div>
@@ -665,7 +719,7 @@ export default function App() {
                 </div>
               ))}
             </div>
-          </section>
+          </motion.section>
 
           {/* 5. Realizacje Section */}
           <section id="realizacje" className="space-y-16">
@@ -737,8 +791,8 @@ export default function App() {
                   <span className="text-slate-ink font-bold">+48 14 600 00 00</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-100 pb-2">
-                  <span className="opacity-60">DOSTĘP:</span> 
-                  <span className="text-slate-ink font-bold">Synchronizacja Cyfrowa 24/7</span>
+                  <span className="opacity-60">DOSTĘPNOŚĆ:</span> 
+                  <span className="text-slate-ink font-bold">Poniedziałek - Sobota</span>
                 </div>
               </div>
             </div>
@@ -750,49 +804,20 @@ export default function App() {
               >
                 <div className="absolute inset-1 border-dashed border border-slate-ink/30" />
                 <BadgeCheck className="text-slate-ink" size={48} lg:size={64} strokeWidth={1.5} />
-                <span className="absolute top-1 left-2 lg:top-1.5 lg:left-2.5 text-[7px] lg:text-[8px] font-mono text-slate-ink font-bold opacity-40">OFICJALNA PIECZĘĆ</span>
               </motion.div>
               <p className="font-mono text-[9px] lg:text-[10px] text-center text-slate-ink uppercase tracking-[0.15em] lg:tracking-[0.2em] font-bold">
-                Uwierzytelnione Archiwum<br/>Rewizja: SLATE-03
+                Gwarancja Jakości
               </p>
             </div>
           </div>
           
           <div className="mt-12 lg:mt-16 pt-8 lg:pt-10 border-t border-sheet-border flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] lg:text-[10px] font-mono text-slate-ink/40 uppercase tracking-widest font-bold text-center md:text-left">
-            <span>© 2024 Dachy Tarnów // Dział Techniczny // Wszelkie Prawa Zastrzeżone</span>
-            <span className="bg-gray-100 px-3 lg:px-4 py-1.5 lg:py-2 rounded-sm border border-gray-200">Wersja Systemu: 4.8.2 // STABLE_REL</span>
+            <span>© {new Date().getFullYear()} SzramaDach. Wszystkie prawa zastrzeżone.</span>
           </div>
         </motion.footer>
       </div>
 
-      {/* Status Bar */}
-      <div className="fixed bottom-0 left-0 w-full h-auto lg:h-12 glass-panel z-[70] flex flex-col lg:flex-row items-center px-4 lg:px-8 py-2 lg:py-0 font-mono text-[9px] lg:text-[11px] text-slate-ink shadow-[0_-10px_20px_rgba(0,0,0,0.1)] gap-2 lg:gap-10">
-        <div className="flex items-center justify-between w-full lg:w-auto gap-4">
-          <div className="flex items-center gap-2 lg:gap-3">
-            <motion.span 
-              animate={{ 
-                opacity: [1, 0.3, 1],
-                scale: [1, 1.2, 1]
-              }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-              className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-accent-orange shadow-[0_0_10px_rgba(255,107,0,0.5)]" 
-            />
-            <span className="font-bold text-slate-ink uppercase tracking-wider">Live Sync</span>
-          </div>
-          <span className="h-4 lg:h-5 w-px bg-sheet-border hidden lg:block" />
-          <span className="uppercase opacity-70 hidden sm:block">Node: Tarnów_Master_01</span>
-          <span className="h-4 lg:h-5 w-px bg-sheet-border hidden lg:block" />
-          <span className="uppercase opacity-70">Session: <span className="text-accent-orange font-bold">0xBF4492</span></span>
-        </div>
-        
-        <div className="flex items-center justify-between w-full lg:w-auto lg:ml-auto gap-4 lg:gap-6">
-          <div className="flex items-center gap-2 opacity-60">
-            <Activity size={12} lg:size={14} />
-            <span>12ms</span>
-          </div>
-          <span className="bg-slate-ink text-white px-3 lg:px-4 py-1 lg:py-1.5 text-[8px] lg:text-[10px] uppercase font-bold tracking-[0.1em] lg:tracking-[0.2em] shadow-lg rounded-sm">Slate Variant 2/3</span>
-        </div>
-      </div>
+      {/* Status Bar - Removed */}
     </div>
   );
 }

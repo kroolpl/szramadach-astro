@@ -73,12 +73,10 @@ export const Sheet: React.FC<SheetProps> = ({
               {children}
             </div>
 
-            {/* Footer / Technical Info */}
+            {/* Footer / Info */}
             <div className="p-6 border-t border-sheet-border bg-gray-50/30">
               <div className="flex flex-col gap-2 font-mono text-[8px] text-slate-ink/40 uppercase tracking-widest">
-                <p>System: SzramaDach_Mobile_v2.0</p>
-                <p>Access: Authorized_Only</p>
-                <p>© 2026 SzramaDach // Tarnów</p>
+                <p>© {new Date().getFullYear()} SzramaDach // Tarnów</p>
               </div>
             </div>
           </motion.div>

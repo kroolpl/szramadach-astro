@@ -35,7 +35,7 @@ const features = [
         REF: ABOUT_US_01
     </div>
     <div
-        class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-sheet-border pb-8"
+        class="about-header flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-sheet-border pb-8 opacity-0"
     >
         <div class="space-y-4">
             <p
@@ -58,7 +58,7 @@ const features = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {
             features.map((item) => (
-                <div class="p-8 bg-sheet-white border border-sheet-border technical-sheet-shadow space-y-6 rounded-sm hover:-translate-y-1 transition-transform">
+                <div class="feature-card p-8 bg-sheet-white border border-sheet-border technical-sheet-shadow space-y-6 rounded-sm hover:-translate-y-1 transition-transform opacity-0">
                     <div class="w-12 h-12 border border-sheet-border flex items-center justify-center bg-gray-50">
                         <item.icon class="text-accent-orange" />
                     </div>
@@ -73,3 +73,29 @@ const features = [
         }
     </div>
 </section>
+
+<script>
+    import { animate, inView, stagger } from "motion";
+
+    // Header reveal
+    inView(".about-header", ({ target }) => {
+        animate(
+            target,
+            { opacity: 1, y: [30, 0] },
+            { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
+        );
+    });
+
+    // Features staggered reveal
+    inView(".feature-card", ({ target }) => {
+        animate(
+            ".feature-card",
+            { opacity: 1, y: [30, 0] },
+            { 
+                duration: 0.8, 
+                delay: stagger(0.1),
+                easing: [0.22, 1, 0.36, 1] 
+            }
+        );
+    });
+</script>

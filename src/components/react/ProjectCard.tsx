@@ -40,7 +40,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className="group relative bg-sheet-white border flex flex-col border-sheet-border technical-sheet-shadow rounded-sm overflow-hidden min-h-full"
     >
       {/* ID Badge */}
@@ -57,7 +57,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         >
           <img
             alt={title}
-            className="w-full h-full object-cover mix-blend-multiply opacity-95 group-hover:opacity-100 transition-all duration-1000 grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105"
+            className="w-full h-full object-cover mix-blend-multiply opacity-95 group-hover:opacity-100 transition-all duration-700 grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105"
             src={image}
             loading="lazy"
             decoding="async"
@@ -71,6 +71,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           <motion.div
             initial={{ x: -10, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.5 }}
             className="inline-block bg-accent-orange text-white text-[9px] font-black px-3 py-1 w-max tracking-[0.2em] uppercase shadow-sm"
           >
             Project Status: Completed
@@ -81,12 +83,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         <div className="border-t-2 border-slate-ink/10 flex-grow">
           {specs.map((spec, idx) => (
-            <div key={idx} className="border-b border-dashed border-gray-200 py-3 flex justify-between items-center text-[10px] lg:text-[11px]">
-              <span className="text-slate-ink/60 uppercase font-mono font-bold max-w-[50%] truncate pr-2">{spec.label.replace(/_/g, ' ')}</span>
+            <motion.div 
+              key={idx} 
+              initial={{ opacity: 0, x: -5 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 + idx * 0.05 }}
+              className="border-b border-dashed border-gray-200 py-3 flex justify-between items-center text-[10px] lg:text-[11px] group/row hover:bg-slate-ink/5 transition-colors px-1"
+            >
+              <span className="text-slate-ink/60 uppercase font-mono font-bold max-w-[50%] truncate pr-2 group-hover/row:text-slate-ink transition-colors">{spec.label.replace(/_/g, ' ')}</span>
               <span className={`font-black uppercase tracking-tight text-right ${spec.highlight ? 'text-accent-orange' : 'text-slate-ink'}`}>
                 {spec.value}
               </span>
-            </div>
+            </motion.div>
           ))}
         </div>
 

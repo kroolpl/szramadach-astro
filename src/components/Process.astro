@@ -38,7 +38,7 @@ const steps = [
     >
         REF: PROCESS_03
     </div>
-    <div class="space-y-4">
+    <div class="process-header space-y-4 opacity-0">
         <p
             class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]"
         >
@@ -56,7 +56,7 @@ const steps = [
     >
         {
             steps.map((item) => (
-                <div class="bg-sheet-white p-10 space-y-8 relative group hover:bg-gray-50 transition-colors">
+                <div class="process-step bg-sheet-white p-10 space-y-8 relative group hover:bg-gray-50 transition-colors opacity-0">
                     <div class="flex justify-between items-start">
                         <span class="font-mono text-4xl font-black text-slate-ink/10 group-hover:text-accent-orange/20 transition-colors">
                             {item.step}
@@ -78,3 +78,29 @@ const steps = [
         }
     </div>
 </section>
+
+<script>
+    import { animate, inView, stagger } from "motion";
+
+    // Header reveal
+    inView(".process-header", ({ target }) => {
+        animate(
+            target,
+            { opacity: 1, y: [30, 0] },
+            { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
+        );
+    });
+
+    // Steps staggered reveal
+    inView(".process-step", ({ target }) => {
+        animate(
+            ".process-step",
+            { opacity: 1, y: [30, 0] },
+            { 
+                duration: 0.8, 
+                delay: stagger(0.1),
+                easing: [0.22, 1, 0.36, 1] 
+            }
+        );
+    });
+</script>

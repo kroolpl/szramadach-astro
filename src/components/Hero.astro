@@ -8,20 +8,20 @@ import heroImage from "../assets/images/hero-roof.png";
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-7 space-y-8">
             <h1
-                class="text-5xl lg:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-slate-ink"
+                class="hero-title text-5xl lg:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-slate-ink opacity-0"
             >
                 Twój dach – <span class="text-accent-orange">nasza pasja.</span>
                 Solidne dekarstwo.
             </h1>
 
             <p
-                class="text-lg lg:text-xl text-slate-ink/70 max-w-2xl font-medium leading-relaxed"
+                class="hero-subtitle text-lg lg:text-xl text-slate-ink/70 max-w-2xl font-medium leading-relaxed opacity-0"
             >
                 Od drobnych napraw po kompleksowe krycie dachów. Zapewniamy
                 bezpieczeństwo nad Twoją głową na lata w Tarnowie i okolicach.
             </p>
 
-            <div class="flex flex-wrap gap-4">
+            <div class="hero-actions flex flex-wrap gap-4 opacity-0">
                 <button
                     id="hero-estimate-btn"
                     class="bg-accent-orange text-white font-black px-8 py-5 uppercase text-sm tracking-widest shadow-xl flex items-center gap-3 rounded-sm hover:scale-[1.02] active:scale-[0.98] transition-all"
@@ -40,7 +40,7 @@ import heroImage from "../assets/images/hero-roof.png";
 
         <div class="lg:col-span-5 relative">
             <div
-                class="aspect-square bg-gray-100 border border-sheet-border relative overflow-hidden rounded-sm technical-sheet-shadow"
+                class="hero-image-container aspect-square bg-gray-100 border border-sheet-border relative overflow-hidden rounded-sm technical-sheet-shadow opacity-0"
             >
                 <div class="absolute inset-0 w-full h-full">
                     <Image
@@ -63,7 +63,8 @@ import heroImage from "../assets/images/hero-roof.png";
             </div>
 
             <div
-                class="absolute -bottom-6 -left-6 bg-white border border-slate-ink p-6 shadow-2xl z-20 hidden lg:block"
+                id="quality-badge"
+                class="absolute -bottom-6 -left-6 bg-white border border-slate-ink p-6 shadow-2xl z-20 hidden lg:block opacity-0"
             >
                 <div class="flex items-center gap-4">
                     <div
@@ -104,7 +105,57 @@ import heroImage from "../assets/images/hero-roof.png";
 </section>
 
 <script>
+    import { animate, spring } from "motion";
     import { isFormOpen } from "../stores/uiStore";
+
+    // Entrance Animations
+    const sequence = async () => {
+        // Title reveal
+        await animate(
+            ".hero-title",
+            { opacity: 1, y: [20, 0] },
+            { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
+        );
+
+        // Subtitle and actions stagger
+        animate(
+            ".hero-subtitle",
+            { opacity: 1, y: [20, 0] },
+            { duration: 0.8, delay: 0.1, easing: [0.22, 1, 0.36, 1] }
+        );
+        animate(
+            ".hero-actions",
+            { opacity: 1, y: [20, 0] },
+            { duration: 0.8, delay: 0.2, easing: [0.22, 1, 0.36, 1] }
+        );
+
+        // Image container reveal
+        animate(
+            ".hero-image-container",
+            { opacity: 1, scale: [1.05, 1] },
+            { duration: 1.2, delay: 0.3, easing: [0.22, 1, 0.36, 1] }
+        );
+
+        // Quality badge reveal + float
+        animate(
+            "#quality-badge",
+            { opacity: 1, x: [-20, 0] },
+            { duration: 0.8, delay: 0.5, easing: [0.22, 1, 0.36, 1] }
+        ).finished.then(() => {
+            animate(
+                "#quality-badge",
+                { y: [0, -10, 0] },
+                { 
+                    duration: 4, 
+                    repeat: Infinity, 
+                    easing: "ease-in-out" 
+                }
+            );
+        });
+    };
+
+    // Run sequence
+    sequence();
 
     const btn = document.getElementById("hero-estimate-btn");
     btn?.addEventListener("click", () => {

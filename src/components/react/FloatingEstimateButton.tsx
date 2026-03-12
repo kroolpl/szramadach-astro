@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useStore } from "@nanostores/react";
 import { motion, AnimatePresence } from "motion/react";
 import { Calculator } from "lucide-react";
@@ -6,19 +6,20 @@ import { isFormOpen, showEstimateButton } from "../../stores/uiStore";
 
 export const FloatingEstimateButton: React.FC = () => {
     const $showEstimateButton = useStore(showEstimateButton);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
+        setIsMounted(true);
+
         const handleScroll = () => {
-            if (window.scrollY > 300) {
-                showEstimateButton.set(true);
-            } else {
-                showEstimateButton.set(false);
-            }
+            showEstimateButton.set(window.scrollY > 300);
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    if (!isMounted) return null;
 
     return (
         <AnimatePresence>

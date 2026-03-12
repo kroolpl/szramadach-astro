@@ -31,27 +31,37 @@ export const Sheets: React.FC = () => {
                         { label: 'Realizacje', href: '/realizacje' },
                         { label: 'Porady', href: '/porady' }
                     ].map((item) => (
-                        <a
+                        <motion.a
                             key={item.label}
                             href={item.href}
+                            whileHover={{ scale: 1.02, x: 5 }}
+                            whileTap={{ scale: 0.98 }}
                             onClick={() => isMenuOpen.set(false)}
                             className="p-4 border border-sheet-border bg-gray-50/50 text-slate-ink font-black uppercase text-xs tracking-widest hover:bg-accent-orange hover:text-white transition-all flex justify-between items-center group"
                         >
                             {item.label}
                             <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </a>
+                        </motion.a>
                     ))}
 
                     <div className="mt-8 pt-8 border-t border-sheet-border space-y-4">
                         <p className="font-mono text-[10px] uppercase text-slate-ink/40 font-bold tracking-widest">Szybki Kontakt</p>
-                        <a href="tel:+48123456789" className="flex items-center gap-3 text-slate-ink font-bold text-sm">
+                        <motion.a 
+                            whileHover={{ x: 5 }}
+                            href="tel:+48123456789" 
+                            className="flex items-center gap-3 text-slate-ink font-bold text-sm transition-colors hover:text-accent-orange"
+                        >
                             <Phone size={16} className="text-accent-orange" />
                             +48 123 456 789
-                        </a>
-                        <a href="mailto:biuro@szramadach.pl" className="flex items-center gap-3 text-slate-ink font-bold text-sm">
+                        </motion.a>
+                        <motion.a 
+                            whileHover={{ x: 5 }}
+                            href="mailto:biuro@szramadach.pl" 
+                            className="flex items-center gap-3 text-slate-ink font-bold text-sm transition-colors hover:text-accent-orange"
+                        >
                             <Mail size={16} className="text-accent-orange" />
                             biuro@szramadach.pl
-                        </a>
+                        </motion.a>
                     </div>
                 </nav>
             </Sheet>

@@ -1,11 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { type CollectionEntry, getCollection } from "astro:content";
-import { Navigation } from "../../components/react/Navigation";
 import Footer from "../../components/Footer.astro";
-import { Sheets } from "../../components/react/Sheets";
-import { FloatingEstimateButton } from "../../components/react/FloatingEstimateButton";
-import { BackgroundElements } from "../../components/react/BackgroundElements";
 
 const posts = (await getCollection("blog")).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -13,12 +9,7 @@ const posts = (await getCollection("blog")).sort(
 ---
 
 <Layout title="Porady i Artykuły - SzramaDach Tarnów">
-    <BackgroundElements client:load />
-
-    <div class="max-w-[1440px] mx-auto p-4 lg:p-8 relative z-10">
-        <Navigation client:load />
-
-        <main class="mt-12 lg:mt-20">
+    <main class="mt-12 lg:mt-20">
             <div class="space-y-4 mb-16 lg:mb-24">
                 <p
                     class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]"
@@ -90,9 +81,5 @@ const posts = (await getCollection("blog")).sort(
             </div>
         </main>
 
-        <Footer />
-    </div>
-
-    <Sheets client:load />
-    <FloatingEstimateButton client:load />
+    <Footer />
 </Layout>

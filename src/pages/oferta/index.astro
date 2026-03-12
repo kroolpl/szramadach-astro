@@ -1,10 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { Navigation } from "../../components/react/Navigation";
 import Footer from "../../components/Footer.astro";
-import { BackgroundElements } from "../../components/react/BackgroundElements";
-import { Sheets } from "../../components/react/Sheets";
-import { FloatingEstimateButton } from "../../components/react/FloatingEstimateButton";
 import {
     Hammer,
     Layers,
@@ -70,12 +66,7 @@ const fullServices = [
 ---
 
 <Layout title="Nasza Oferta - SzramaDach Tarnów">
-    <BackgroundElements client:load />
-
-    <div class="max-w-[1440px] mx-auto p-4 lg:p-8 relative z-10">
-        <Navigation client:load />
-
-        <main class="space-y-24 lg:space-y-32 pt-16">
+    <main class="space-y-24 lg:space-y-32 pt-16">
             <section id="pelna-oferta" class="space-y-16">
                 <div class="space-y-4">
                     <p
@@ -172,9 +163,5 @@ const fullServices = [
             </section>
         </main>
 
-        <Footer />
-    </div>
-
-    <Sheets client:load />
-    <FloatingEstimateButton client:load />
+    <Footer />
 </Layout>

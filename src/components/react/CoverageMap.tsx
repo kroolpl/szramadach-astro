@@ -26,10 +26,12 @@ export const CoverageMap: React.FC = () => {
     const mapInstanceRef = useRef<any>(null);
 
     useEffect(() => {
+        let isMounted = true;
         if (!mapRef.current || mapInstanceRef.current) return;
 
         // Dynamically import leaflet to avoid SSR issues
         import("leaflet").then((L) => {
+            if (!isMounted) return;
             // Fix default icon paths for bundlers
             delete (L.Icon.Default.prototype as any)._getIconUrl;
             L.Icon.Default.mergeOptions({
@@ -61,7 +63,7 @@ export const CoverageMap: React.FC = () => {
             L.control.zoom({ position: "topright" }).addTo(map);
 
             // 100km radius circle — styled to match site accent
-            L.circle([TARNOW_LAT, TARNOW_LNG], {
+            const coverageCircle = L.circle([TARNOW_LAT, TARNOW_LNG], {
                 radius: RADIUS_M,
                 color: "#E65A00",
                 fillColor: "#E65A00",
@@ -143,15 +145,16 @@ export const CoverageMap: React.FC = () => {
             });
 
             // Fit the map to the circle bounds
-            const circleBounds = L.circle([TARNOW_LAT, TARNOW_LNG], {
-                radius: RADIUS_M,
-            }).getBounds();
+            const circleBounds = coverageCircle.getBounds();
             map.fitBounds(circleBounds, { padding: [24, 24] });
         });
 
         return () => {
-            mapInstanceRef.current?.remove();
-            mapInstanceRef.current = null;
+            isMounted = false;
+            if (mapInstanceRef.current) {
+                mapInstanceRef.current.remove();
+                mapInstanceRef.current = null;
+            }
         };
     }, []);
 

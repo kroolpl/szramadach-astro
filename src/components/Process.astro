@@ -82,25 +82,29 @@ const steps = [
 <script>
     import { animate, inView, stagger } from "motion";
 
-    // Header reveal
-    inView(".process-header", ({ target }) => {
-        animate(
-            target,
-            { opacity: 1, y: [30, 0] },
-            { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
-        );
-    });
+    const initProcess = () => {
+        // Header reveal
+        inView(".process-header", ({ target }) => {
+            animate(
+                target,
+                { opacity: 1, y: [30, 0] },
+                { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
+            );
+        });
 
-    // Steps staggered reveal
-    inView(".process-step", ({ target }) => {
-        animate(
-            ".process-step",
-            { opacity: 1, y: [30, 0] },
-            { 
-                duration: 0.8, 
-                delay: stagger(0.1),
-                easing: [0.22, 1, 0.36, 1] 
-            }
-        );
-    });
+        // Steps staggered reveal
+        inView(".process-step", ({ target }) => {
+            animate(
+                ".process-step",
+                { opacity: 1, y: [30, 0] },
+                { 
+                    duration: 0.8, 
+                    delay: stagger(0.1),
+                    easing: [0.22, 1, 0.36, 1] 
+                }
+            );
+        });
+    };
+
+    document.addEventListener('astro:page-load', initProcess);
 </script>

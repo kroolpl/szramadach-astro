@@ -77,25 +77,29 @@ const features = [
 <script>
     import { animate, inView, stagger } from "motion";
 
-    // Header reveal
-    inView(".about-header", ({ target }) => {
-        animate(
-            target,
-            { opacity: 1, y: [30, 0] },
-            { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
-        );
-    });
+    const initAbout = () => {
+        // Header reveal
+        inView(".about-header", ({ target }) => {
+            animate(
+                target,
+                { opacity: 1, y: [30, 0] },
+                { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
+            );
+        });
 
-    // Features staggered reveal
-    inView(".feature-card", ({ target }) => {
-        animate(
-            ".feature-card",
-            { opacity: 1, y: [30, 0] },
-            { 
-                duration: 0.8, 
-                delay: stagger(0.1),
-                easing: [0.22, 1, 0.36, 1] 
-            }
-        );
-    });
+        // Features staggered reveal
+        inView(".feature-card", ({ target }) => {
+            animate(
+                ".feature-card",
+                { opacity: 1, y: [30, 0] },
+                { 
+                    duration: 0.8, 
+                    delay: stagger(0.1),
+                    easing: [0.22, 1, 0.36, 1] 
+                }
+            );
+        });
+    };
+
+    document.addEventListener('astro:page-load', initAbout);
 </script>

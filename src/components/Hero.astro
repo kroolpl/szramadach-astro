@@ -108,57 +108,62 @@ import heroImage from "../assets/images/hero-roof.png";
     import { animate, spring } from "motion";
     import { isFormOpen } from "../stores/uiStore";
 
-    // Entrance Animations
-    const sequence = async () => {
-        // Title reveal
-        await animate(
-            ".hero-title",
-            { opacity: 1, y: [20, 0] },
-            { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
-        );
+    const initHero = () => {
+        // Entrance Animations
+        const sequence = async () => {
+            // Title reveal
+            await animate(
+                ".hero-title",
+                { opacity: 1, y: [20, 0] },
+                { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
+            );
 
-        // Subtitle and actions stagger
-        animate(
-            ".hero-subtitle",
-            { opacity: 1, y: [20, 0] },
-            { duration: 0.8, delay: 0.1, easing: [0.22, 1, 0.36, 1] }
-        );
-        animate(
-            ".hero-actions",
-            { opacity: 1, y: [20, 0] },
-            { duration: 0.8, delay: 0.2, easing: [0.22, 1, 0.36, 1] }
-        );
+            // Subtitle and actions stagger
+            animate(
+                ".hero-subtitle",
+                { opacity: 1, y: [20, 0] },
+                { duration: 0.8, delay: 0.1, easing: [0.22, 1, 0.36, 1] }
+            );
+            animate(
+                ".hero-actions",
+                { opacity: 1, y: [20, 0] },
+                { duration: 0.8, delay: 0.2, easing: [0.22, 1, 0.36, 1] }
+            );
 
-        // Image container reveal
-        animate(
-            ".hero-image-container",
-            { opacity: 1, scale: [1.05, 1] },
-            { duration: 1.2, delay: 0.3, easing: [0.22, 1, 0.36, 1] }
-        );
+            // Image container reveal
+            animate(
+                ".hero-image-container",
+                { opacity: 1, scale: [1.05, 1] },
+                { duration: 1.2, delay: 0.3, easing: [0.22, 1, 0.36, 1] }
+            );
 
-        // Quality badge reveal + float
-        animate(
-            "#quality-badge",
-            { opacity: 1, x: [-20, 0] },
-            { duration: 0.8, delay: 0.5, easing: [0.22, 1, 0.36, 1] }
-        ).finished.then(() => {
+            // Quality badge reveal + float
             animate(
                 "#quality-badge",
-                { y: [0, -10, 0] },
-                { 
-                    duration: 4, 
-                    repeat: Infinity, 
-                    easing: "ease-in-out" 
-                }
-            );
+                { opacity: 1, x: [-20, 0] },
+                { duration: 0.8, delay: 0.5, easing: [0.22, 1, 0.36, 1] }
+            ).finished.then(() => {
+                animate(
+                    "#quality-badge",
+                    { y: [0, -10, 0] },
+                    { 
+                        duration: 4, 
+                        repeat: Infinity, 
+                        easing: "ease-in-out" 
+                    }
+                );
+            });
+        };
+
+        // Run sequence
+        sequence();
+
+        const btn = document.getElementById("hero-estimate-btn");
+        btn?.addEventListener("click", () => {
+            isFormOpen.set(true);
         });
     };
 
-    // Run sequence
-    sequence();
-
-    const btn = document.getElementById("hero-estimate-btn");
-    btn?.addEventListener("click", () => {
-        isFormOpen.set(true);
-    });
+    // Initialize on first load and after every navigation
+    document.addEventListener('astro:page-load', initHero);
 </script>

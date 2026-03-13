@@ -97,34 +97,38 @@ const services = [
 <script>
     import { animate, inView, stagger } from "motion";
 
-    // Header reveal
-    inView(".services-header", ({ target }) => {
-        animate(
-            target,
-            { opacity: 1, y: [30, 0] },
-            { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
-        );
-    });
+    const initServices = () => {
+        // Header reveal
+        inView(".services-header", ({ target }) => {
+            animate(
+                target,
+                { opacity: 1, y: [30, 0] },
+                { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
+            );
+        });
 
-    // Staggered cards reveal
-    inView(".service-card", ({ target }) => {
-        animate(
-            ".service-card",
-            { opacity: 1, y: [30, 0] },
-            { 
-                duration: 0.8, 
-                delay: stagger(0.15),
-                easing: [0.22, 1, 0.36, 1] 
-            }
-        );
-    });
+        // Staggered cards reveal
+        inView(".service-card", ({ target }) => {
+            animate(
+                ".service-card",
+                { opacity: 1, y: [30, 0] },
+                { 
+                    duration: 0.8, 
+                    delay: stagger(0.15),
+                    easing: [0.22, 1, 0.36, 1] 
+                }
+            );
+        });
 
-    // Footer reveal
-    inView(".services-footer", ({ target }) => {
-        animate(
-            target,
-            { opacity: 1, scale: [0.95, 1] },
-            { duration: 0.6, delay: 0.3, easing: [0.22, 1, 0.36, 1] }
-        );
-    });
+        // Footer reveal
+        inView(".services-footer", ({ target }) => {
+            animate(
+                target,
+                { opacity: 1, scale: [0.95, 1] },
+                { duration: 0.6, delay: 0.3, easing: [0.22, 1, 0.36, 1] }
+            );
+        });
+    };
+
+    document.addEventListener('astro:page-load', initServices);
 </script>

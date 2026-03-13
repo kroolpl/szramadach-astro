@@ -13,11 +13,20 @@ export function LocationMap() {
         let map: any = null;
 
         const initMap = async () => {
+            // Check if there is already a map instance on this element
+            const container = document.getElementById('location-map');
+            if (!container || (container as any)._leaflet_id) {
+                console.log("Map container already initialized or not found.");
+                return;
+            }
+
             // @ts-ignore
             const L = await import('leaflet');
             
             // Tarnów coordinates
             const position: [number, number] = [50.0121, 20.9858];
+
+            console.log("Initializing Leaflet map...");
 
             map = L.map('location-map', {
                 center: position,
@@ -50,9 +59,9 @@ export function LocationMap() {
                 iconAnchor: [24, 24]
             });
 
-            L.marker(position, { icon: customIcon })
-                .addTo(map)
-                .bindPopup(`
+            const marker = L.marker(position, { icon: customIcon }).addTo(map);
+            
+            marker.bindPopup(`
                     <div class="p-2 font-mono">
                         <p class="font-black text-slate-ink uppercase text-[11px] mb-1">SZRAMADACH TARNÓW</p>
                         <p class="text-[10px] text-slate-ink/60">ul. Krakowska 123<br/>33-100 Tarnów</p>
@@ -62,10 +71,18 @@ export function LocationMap() {
                 })
                 .openPopup();
 
-            // Force map to recalculate its container size
-            setTimeout(() => {
-                map?.invalidateSize();
-            }, 100);
+            // Use ResizeObserver to keep map size in sync with container
+            const resizeObserver = new ResizeObserver(() => {
+                if (map) {
+                    map.invalidateSize();
+                }
+            });
+            resizeObserver.observe(container);
+
+            // Multiple attempts to invalidate size (helps with transitions/reveals)
+            setTimeout(() => map?.invalidateSize(), 100);
+            setTimeout(() => map?.invalidateSize(), 500);
+            setTimeout(() => map?.invalidateSize(), 1000);
         };
 
         initMap();
@@ -108,6 +125,15 @@ export function LocationMap() {
                 }
                 #location-map {
                     filter: grayscale(100%) contrast(1.1) brightness(1.1);
+                    background: #F9FAFB !important; /* Ensure a base color if tiles fail */
+                }
+                /* Ensure Leaflet controls are visible */
+                .leaflet-control-container {
+                    z-index: 1000 !important;
+                }
+                .leaflet-tile-pane {
+                    opacity: 1 !important;
+                    visibility: visible !important;
                 }
             `}} />
         </div>

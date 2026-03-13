@@ -1,32 +1,266 @@
 ---
 // src/pages/kontakt/index.astro
 import Layout from "../../layouts/Layout.astro";
-import ContactHero from "../../components/ContactHero.astro";
-import ContactDetails from "../../components/ContactDetails.astro";
-import FAQ from "../../components/FAQ.astro";
-import { LocationMap } from "../../components/react/LocationMap";
 import Footer from "../../components/Footer.astro";
+import { LocationMap } from "../../components/react/LocationMap";
+import { Phone, Mail, MapPin, ChevronDown } from "lucide-react";
+
+const contactMethods = [
+    {
+        icon: Phone,
+        label: "Zadzwoń do nas",
+        value: "+48 500 123 456",
+        href: "tel:+48500123456",
+        desc: "Dostępni pn-pt 7:00-16:00"
+    },
+    {
+        icon: Mail,
+        label: "Napisz wiadomość",
+        value: "biuro@szramadach.pl",
+        href: "mailto:biuro@szramadach.pl",
+        desc: "Odpowiadamy w ciągu 24h"
+    },
+    {
+        icon: MapPin,
+        label: "Odwiedź nas",
+        value: "ul. Krakowska 123, Tarnów",
+        href: "https://maps.google.com/?q=Krakowska+123+Tarnow",
+        desc: "Zapraszamy do biura"
+    }
+];
+
+const faqs = [
+    {
+        q: "Czy wycena dachu jest darmowa?",
+        a: "Tak, każda wycena i wstępny obmiar są całkowicie darmowe i niezobowiązujące. Przyjeżdżamy na miejsce, oceniamy stan dachu i przygotowujemy szczegółowy kosztorys."
+    },
+    {
+        q: "Jak szybko możecie zacząć pracę?",
+        a: "Termin rozpoczęcia prac zależy od sezonu i aktualnego obłożenia. Zazwyczaj jesteśmy w stanie pojawić się na dachu w ciągu 2-4 tygodni od akceptacji wyceny."
+    },
+    {
+        q: "Na jakim obszarze działacie?",
+        a: "Obsługujemy Tarnów oraz cały region w promieniu około 100 km (Kraków, Brzesko, Dębica, Bochnia, Nowy Sącz)."
+    },
+    {
+        q: "Czy dajecie gwarancję na swoje usługi?",
+        a: "Oczywiście. Na wszystkie wykonane przez nas prace dekarskie udzielamy pisemnej gwarancji. Stosujemy tylko sprawdzone materiały od renomowanych dostawców."
+    },
+    {
+        q: "Jakie materiały dachowe polecacie?",
+        a: "To zależy od konstrukcji budynku i Twojego budżetu. Specjalizujemy się w dachówkach ceramicznych, betonowych oraz blachodachówkach. Doradzimy najlepsze rozwiązanie podczas spotkania."
+    }
+];
 ---
 
 <Layout title="Kontakt - SzramaDach Tarnów">
-    <div class="px-5 lg:px-10 max-w-7xl mx-auto">
-        <main class="space-y-24 lg:space-y-40">
-            <ContactHero />
-            <ContactDetails />
+    <div class="px-5 lg:px-10 max-w-[1440px] mx-auto relative z-10">
+        <main class="space-y-24 lg:space-y-40 pb-24 lg:pb-40">
             
-            <!-- Location Map Section -->
-            <section id="mapa" class="relative bg-sheet-white border border-sheet-border technical-sheet-shadow rounded-sm overflow-hidden h-[500px] lg:h-[600px] scroll-mt-24 lg:scroll-mt-32">
-                <div
-                    class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider z-20"
-                >
+            {/* HERO SECTION */}
+            <section id="contact-hero" class="relative pt-12 lg:pt-24 scroll-mt-24 lg:scroll-mt-32">
+                <div class="space-y-8 max-w-4xl">
+                    <p class="hero-label font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px] opacity-0">
+                        KONTAKT // SKONTAKTUJ SIĘ Z NAMI
+                    </p>
+                    <h1 class="hero-title text-5xl lg:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-slate-ink opacity-0">
+                        Jesteśmy do Twojej <span class="text-accent-orange">dyspozycji.</span>
+                    </h1>
+                    <p class="hero-subtitle text-lg lg:text-xl text-slate-ink/70 max-w-2xl font-medium leading-relaxed opacity-0">
+                        Masz pytania dotyczące dachu? Potrzebujesz darmowej wyceny lub fachowej porady? 
+                        Zadzwoń do nas lub napisz – chętnie pomożemy w każdej sprawie.
+                    </p>
+                </div>
+            </section>
+
+            {/* CONTACT METHODS GRID */}
+            <section class="mt-24 lg:mt-32 relative">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    {contactMethods.map((method, index) => (
+                        <a 
+                            href={method.href}
+                            class="contact-card group relative bg-sheet-white border border-sheet-border p-8 rounded-sm technical-sheet-shadow hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 opacity-0 overflow-hidden block"
+                        >
+                            <!-- Decorative background index -->
+                            <div class="absolute -right-4 -bottom-8 font-black text-8xl text-slate-ink/[0.03] italic pointer-events-none group-hover:text-accent-orange/[0.05] transition-colors duration-500">
+                                0{index + 1}
+                            </div>
+
+                            <div class="w-14 h-14 bg-gray-50 border border-sheet-border flex items-center justify-center text-slate-ink group-hover:bg-accent-orange group-hover:text-white group-hover:border-accent-orange group-hover:scale-110 transition-all duration-500 mb-8 rounded-sm">
+                                <method.icon size={28} strokeWidth={1.5} />
+                            </div>
+                            
+                            <p class="font-mono text-[10px] uppercase text-accent-orange tracking-[0.3em] font-black mb-3">
+                                {method.label}
+                            </p>
+                            
+                            <h3 class="text-2xl lg:text-3xl font-black text-slate-ink mb-3 group-hover:text-accent-orange transition-colors duration-300 tracking-tighter">
+                                {method.value}
+                            </h3>
+                            
+                            <p class="text-sm text-slate-ink/50 font-medium leading-relaxed">
+                                {method.desc}
+                            </p>
+
+                            <div class="mt-10 flex items-center gap-3 text-[9px] font-mono font-bold text-slate-ink/20 uppercase tracking-widest">
+                                <span class="flex-shrink-0">SYSTEM_CHANNEL_{index + 1}</span>
+                                <div class="h-[1px] flex-1 bg-sheet-border/50"></div>
+                                <div class="w-1.5 h-1.5 bg-sheet-border rounded-full group-hover:bg-accent-orange transition-colors duration-500"></div>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </section>
+
+            {/* LOCATION MAP SECTION */}
+            <section id="mapa" class="relative bg-sheet-white border border-sheet-border technical-sheet-shadow rounded-sm overflow-hidden h-[500px] lg:h-[600px] scroll-mt-24 lg:scroll-mt-32 opacity-0 map-section">
+                <div class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider z-20">
                     REF: BIURO_REF_07
                 </div>
                 <LocationMap client:load />
             </section>
 
-            <FAQ />
+            {/* FAQ SECTION */}
+            <section id="faq" class="relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm scroll-mt-24 lg:scroll-mt-32 overflow-hidden">
+                <div class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider z-10">
+                    REF: Q&A_DOC_06
+                </div>
+
+                <div class="faq-header space-y-4 mb-12 opacity-0">
+                    <p class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]">
+                        06 // CZĘSTE PYTANIA
+                    </p>
+                    <h2 class="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-slate-ink">
+                        Dowiedz się <span class="text-accent-orange">więcej</span>
+                    </h2>
+                </div>
+
+                <div class="space-y-4 max-w-4xl">
+                    {faqs.map((faq, index) => (
+                        <details class="faq-item group bg-white border border-sheet-border rounded-sm overflow-hidden opacity-0">
+                            <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none hover:bg-gray-50 transition-colors">
+                                <div class="flex items-center gap-4">
+                                    <span class="font-mono text-[10px] text-accent-orange/40 font-black">
+                                        Q_{String(index + 1).padStart(2, '0')}
+                                    </span>
+                                    <h3 class="text-sm lg:text-base font-black uppercase tracking-tight text-slate-ink group-open:text-accent-orange transition-colors">
+                                        {faq.q}
+                                    </h3>
+                                </div>
+                                <div class="text-slate-ink/20 group-open:rotate-180 group-open:text-accent-orange transition-all duration-300">
+                                    <ChevronDown size={20} strokeWidth={2.5} />
+                                </div>
+                            </summary>
+                            <div class="p-6 pt-0 border-t border-sheet-border/10 bg-gray-50/30">
+                                <p class="text-slate-ink/70 text-sm lg:text-base font-medium leading-relaxed max-w-3xl mt-4">
+                                    {faq.a}
+                                </p>
+                            </div>
+                        </details>
+                    ))}
+                </div>
+            </section>
+
         </main>
     </div>
 
     <Footer />
 </Layout>
+
+<style is:global>
+    /* Prevent default details marker in WebKit */
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+    
+    /* Smooth accordion animation */
+    details {
+        transition-property: height, margin, padding;
+        transition-duration: 300ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    details[open] summary ~ * {
+        animation: details-show 300ms ease-in-out;
+    }
+    @keyframes details-show {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script>
+    import { animate, inView, stagger } from "motion";
+
+    const initKontaktPage = () => {
+        console.log("Initializing Kontakt Page...");
+        
+        // Ensure map section is visible even if animation fails
+        const mapSection = document.querySelector(".map-section") as HTMLElement;
+        const faqSection = document.querySelector("#faq") as HTMLElement;
+        const faqHeader = document.querySelector(".faq-header") as HTMLElement;
+        const faqItems = document.querySelectorAll(".faq-item");
+
+        // Hero Sequence
+        const heroLabel = document.querySelector(".hero-label");
+        const heroTitle = document.querySelector(".hero-title");
+        const heroSubtitle = document.querySelector(".hero-subtitle");
+        
+        if (heroLabel) animate(heroLabel as any, { opacity: 1, y: [10, 0] }, { duration: 0.4, easing: [0.22, 1, 0.36, 1] } as any);
+        if (heroTitle) animate(heroTitle as any, { opacity: 1, y: [20, 0] }, { duration: 0.8, delay: 0.1, easing: [0.22, 1, 0.36, 1] } as any);
+        if (heroSubtitle) animate(heroSubtitle as any, { opacity: 1, y: [20, 0] }, { duration: 0.8, delay: 0.2, easing: [0.22, 1, 0.36, 1] } as any);
+
+        // Contact Cards Stagger
+        const cards = document.querySelectorAll(".contact-card");
+        if (cards.length > 0) {
+            inView(".contact-card", () => {
+                animate(
+                    Array.from(cards) as any,
+                    { opacity: 1, y: [30, 0] },
+                    { duration: 0.8, delay: stagger(0.15), easing: [0.22, 1, 0.36, 1] } as any
+                );
+            });
+        }
+
+        // Map Section Reveal
+        if (mapSection) {
+            inView(".map-section", (info: any) => {
+                animate(
+                    info.target as any,
+                    { opacity: 1, y: [30, 0] },
+                    { duration: 0.8, easing: [0.22, 1, 0.36, 1] } as any
+                );
+            });
+        }
+
+        // FAQ Section Reveal
+        if (faqSection) {
+            inView("#faq", () => {
+                if (faqHeader) {
+                    animate(
+                        faqHeader as any,
+                        { opacity: 1, y: [30, 0] },
+                        { duration: 0.8, easing: [0.22, 1, 0.36, 1] } as any
+                    );
+                }
+
+                if (faqItems.length > 0) {
+                    animate(
+                        Array.from(faqItems) as any,
+                        { opacity: 1, x: [-20, 0] },
+                        { duration: 0.6, delay: stagger(0.1), easing: [0.22, 1, 0.36, 1] } as any
+                    );
+                }
+            }, { margin: "0px 0px -100px 0px" });
+        }
+    };
+
+    // Use both DOMContentLoaded and astro:page-load for maximum reliability
+    document.addEventListener('DOMContentLoaded', initKontaktPage);
+    document.addEventListener('astro:page-load', initKontaktPage);
+</script>

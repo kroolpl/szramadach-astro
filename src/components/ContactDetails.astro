@@ -32,27 +32,33 @@ const contactMethods = [
         {contactMethods.map((method, index) => (
             <a 
                 href={method.href}
-                class="contact-card group bg-sheet-white border border-sheet-border p-8 rounded-sm technical-sheet-shadow hover:-translate-y-1 hover:shadow-xl transition-all duration-300 opacity-0"
+                class="contact-card group relative bg-sheet-white border border-sheet-border p-8 rounded-sm technical-sheet-shadow hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 opacity-0 overflow-hidden"
             >
-                <div class="w-12 h-12 bg-gray-50 border border-sheet-border flex items-center justify-center text-slate-ink group-hover:bg-accent-orange group-hover:text-white group-hover:border-accent-orange transition-all duration-300 mb-6">
-                    <method.icon size={24} />
+                <!-- Decorative background index -->
+                <div class="absolute -right-4 -bottom-8 font-black text-8xl text-slate-ink/[0.03] italic pointer-events-none group-hover:text-accent-orange/[0.05] transition-colors duration-500">
+                    0{index + 1}
+                </div>
+
+                <div class="w-14 h-14 bg-gray-50 border border-sheet-border flex items-center justify-center text-slate-ink group-hover:bg-accent-orange group-hover:text-white group-hover:border-accent-orange group-hover:scale-110 transition-all duration-500 mb-8 rounded-sm">
+                    <method.icon size={28} strokeWidth={1.5} />
                 </div>
                 
-                <p class="font-mono text-[10px] uppercase text-accent-orange tracking-widest font-black mb-2">
+                <p class="font-mono text-[10px] uppercase text-accent-orange tracking-[0.3em] font-black mb-3">
                     {method.label}
                 </p>
                 
-                <h3 class="text-xl lg:text-2xl font-black text-slate-ink mb-2 group-hover:text-accent-orange transition-colors">
+                <h3 class="text-2xl lg:text-3xl font-black text-slate-ink mb-3 group-hover:text-accent-orange transition-colors duration-300 tracking-tighter">
                     {method.value}
                 </h3>
                 
-                <p class="text-sm text-slate-ink/50 font-medium">
+                <p class="text-sm text-slate-ink/50 font-medium leading-relaxed">
                     {method.desc}
                 </p>
 
-                <div class="mt-8 flex items-center gap-2 text-[10px] font-mono font-bold text-slate-ink/30 uppercase tracking-tighter">
-                    <span>REF: CONTACT_DR_{index + 1}</span>
-                    <div class="h-px flex-1 bg-sheet-border"></div>
+                <div class="mt-10 flex items-center gap-3 text-[9px] font-mono font-bold text-slate-ink/20 uppercase tracking-widest">
+                    <span class="flex-shrink-0">SYSTEM_CHANNEL_{index + 1}</span>
+                    <div class="h-[1px] flex-1 bg-sheet-border/50"></div>
+                    <div class="w-1.5 h-1.5 bg-sheet-border rounded-full group-hover:bg-accent-orange transition-colors duration-500"></div>
                 </div>
             </a>
         ))}
@@ -63,15 +69,18 @@ const contactMethods = [
     import { animate, inView, stagger } from "motion";
 
     const initContactDetails = () => {
+        const cards = document.querySelectorAll(".contact-card");
+        if (cards.length === 0) return;
+
         inView(".contact-card", () => {
             animate(
-                ".contact-card",
+                Array.from(cards) as any,
                 { opacity: 1, y: [30, 0] },
                 { 
                     duration: 0.8, 
-                    delay: stagger(0.1),
+                    delay: stagger(0.15),
                     easing: [0.22, 1, 0.36, 1] 
-                }
+                } as any
             );
         });
     };

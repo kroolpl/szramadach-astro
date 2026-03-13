@@ -35,8 +35,10 @@ export function LocationMap() {
                 scrollWheelZoom: false
             });
 
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 20
             }).addTo(map);
 
             // Add zoom control to bottom right
@@ -124,7 +126,6 @@ export function LocationMap() {
                     border: 1px solid #D1D5DB !important;
                 }
                 #location-map {
-                    filter: grayscale(100%) contrast(1.1) brightness(1.1);
                     min-height: 400px;
                     width: 100%;
                     position: relative;

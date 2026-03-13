@@ -31,7 +31,7 @@ const steps = [
 
 <section
     id="proces"
-    class="space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm mt-24 lg:mt-40 scroll-mt-24 lg:scroll-mt-32"
+    class="space-y-10 lg:space-y-16 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-6 lg:p-16 rounded-sm mt-16 lg:mt-40 scroll-mt-24 lg:scroll-mt-32"
 >
     <div
         class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider"
@@ -45,18 +45,18 @@ const steps = [
             03 // WORKFLOW
         </p>
         <h2
-            class="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-slate-ink"
+            class="text-3xl lg:text-6xl font-black uppercase tracking-tighter text-slate-ink"
         >
             Jak działamy?
         </h2>
     </div>
 
     <div
-        class="grid grid-cols-1 lg:grid-cols-4 gap-px bg-sheet-border border border-sheet-border technical-sheet-shadow rounded-sm overflow-hidden"
+        class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-sheet-border border border-sheet-border technical-sheet-shadow rounded-sm overflow-hidden"
     >
         {
             steps.map((item) => (
-                <div class="process-step bg-sheet-white p-10 space-y-8 relative group hover:bg-gray-50 transition-colors opacity-0">
+                <div class="process-step bg-sheet-white p-5 lg:p-10 space-y-4 lg:space-y-8 relative group hover:bg-gray-50 transition-colors opacity-0">
                     <div class="flex justify-between items-start">
                         <span class="font-mono text-4xl font-black text-slate-ink/10 group-hover:text-accent-orange/20 transition-colors">
                             {item.step}

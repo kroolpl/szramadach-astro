@@ -4,11 +4,11 @@ import { Image } from "astro:assets";
 import heroImage from "../assets/images/hero-roof.png";
 ---
 
-<section id="hero" class="relative pt-12 lg:pt-24 scroll-mt-24 lg:scroll-mt-32">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<section id="hero" class="relative pt-8 lg:pt-24 scroll-mt-24 lg:scroll-mt-32">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         <div class="lg:col-span-7 space-y-8">
             <h1
-                class="hero-title text-5xl lg:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-slate-ink opacity-0"
+                class="hero-title text-4xl sm:text-5xl lg:text-8xl font-black uppercase leading-[0.88] tracking-tighter text-slate-ink opacity-0"
             >
                 Twój dach – <span class="text-accent-orange">nasza pasja.</span>
                 Solidne dekarstwo.
@@ -21,24 +21,24 @@ import heroImage from "../assets/images/hero-roof.png";
                 bezpieczeństwo nad Twoją głową na lata w Tarnowie i okolicach.
             </p>
 
-            <div class="hero-actions flex flex-wrap gap-4 opacity-0">
+            <div class="hero-actions flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 opacity-0">
                 <button
                     id="hero-estimate-btn"
-                    class="bg-accent-orange text-white font-black px-8 py-5 uppercase text-sm tracking-widest shadow-xl flex items-center gap-3 rounded-sm hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    class="bg-accent-orange text-white font-black px-6 py-4 sm:px-8 sm:py-5 uppercase text-sm tracking-widest shadow-xl flex items-center justify-center gap-3 rounded-sm hover:scale-[1.02] active:scale-[0.98] transition-all w-full sm:w-auto"
                 >
                     <Calculator size={18} />
                     Darmowa wycena
                 </button>
                 <a
                     href="#realizacje"
-                    class="border-2 border-slate-ink text-slate-ink font-black px-8 py-5 uppercase text-sm tracking-widest flex items-center gap-3 rounded-sm hover:scale-[1.02] hover:bg-slate-ink/5 active:scale-[0.98] transition-all"
+                    class="border-2 border-slate-ink text-slate-ink font-black px-6 py-4 sm:px-8 sm:py-5 uppercase text-sm tracking-widest flex items-center justify-center gap-3 rounded-sm hover:scale-[1.02] hover:bg-slate-ink/5 active:scale-[0.98] transition-all w-full sm:w-auto"
                 >
                     Nasze realizacje
                 </a>
             </div>
         </div>
 
-        <div class="lg:col-span-5 relative">
+        <div class="lg:col-span-5 relative hidden lg:block">
             <div
                 class="hero-image-container aspect-square bg-gray-100 border border-sheet-border relative overflow-hidden rounded-sm technical-sheet-shadow opacity-0"
             >

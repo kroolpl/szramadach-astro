@@ -42,7 +42,8 @@ export const Navigation: React.FC = () => {
                         { label: 'Start', href: '/' },
                         { label: 'Oferta', href: '/oferta' },
                         { label: 'Realizacje', href: '/realizacje' },
-                        { label: 'Porady', href: '/porady' }
+                        { label: 'Porady', href: '/porady' },
+                        { label: 'Kontakt', href: '/kontakt' }
                     ].map((item, idx) => (
                         <motion.a
                             key={item.label}

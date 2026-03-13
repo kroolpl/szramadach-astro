@@ -1,0 +1,103 @@
+---
+// src/components/FAQ.astro
+import { HelpCircle, ChevronDown } from "lucide-react";
+
+const faqs = [
+    {
+        q: "Czy wycena dachu jest darmowa?",
+        a: "Tak, każda wycena i wstępny obmiar są całkowicie darmowe i niezobowiązujące. Przyjeżdżamy na miejsce, oceniamy stan dachu i przygotowujemy szczegółowy kosztorys."
+    },
+    {
+        q: "Jak szybko możecie zacząć pracę?",
+        a: "Termin rozpoczęcia prac zależy od sezonu i aktualnego obłożenia. Zazwyczaj jesteśmy w stanie pojawić się na dachu w ciągu 2-4 tygodni od akceptacji wyceny."
+    },
+    {
+        q: "Na jakim obszarze działacie?",
+        a: "Obsługujemy Tarnów oraz cały region w promieniu około 100 km (Kraków, Brzesko, Dębica, Bochnia, Nowy Sącz)."
+    },
+    {
+        q: "Czy dajecie gwarancję na swoje usługi?",
+        a: "Oczywiście. Na wszystkie wykonane przez nas prace dekarskie udzielamy pisemnej gwarancji. Stosujemy tylko sprawdzone materiały od renomowanych dostawców."
+    },
+    {
+        q: "Jakie materiały dachowe polecacie?",
+        a: "To zależy od konstrukcji budynku i Twojego budżetu. Specjalizujemy się w dachówkach ceramicznych, betonowych oraz blachodachówkach. Doradzimy najlepsze rozwiązanie podczas spotkania."
+    }
+];
+---
+
+<section id="faq" class="mt-24 lg:mt-40 relative bg-sheet-white border border-sheet-border technical-sheet-shadow p-8 lg:p-16 rounded-sm scroll-mt-24 lg:scroll-mt-32 overflow-hidden">
+     <!-- Tab label -->
+     <div
+     class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider z-10"
+ >
+     REF: Q&A_DOC_06
+ </div>
+
+    <div class="faq-header space-y-4 mb-12 opacity-0">
+        <p class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]">
+            06 // CZĘSTE PYTANIA
+        </p>
+        <h2 class="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-slate-ink">
+            Dowiedz się <span class="text-accent-orange">więcej</span>
+        </h2>
+    </div>
+
+    <div class="space-y-4 max-w-4xl">
+        {faqs.map((faq, index) => (
+            <details class="faq-item group bg-sheet-white border border-sheet-border rounded-sm overflow-hidden opacity-0">
+                <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="font-mono text-[10px] text-accent-orange/40 font-black">
+                            Q_{String(index + 1).padStart(2, '0')}
+                        </span>
+                        <h3 class="text-sm lg:text-base font-black uppercase tracking-tight text-slate-ink">
+                            {faq.q}
+                        </h3>
+                    </div>
+                    <div class="text-slate-ink/20 group-open:rotate-180 transition-transform duration-300">
+                        <ChevronDown size={20} />
+                    </div>
+                </summary>
+                <div class="p-6 pt-0 border-t border-sheet-border/50">
+                    <p class="text-slate-ink/70 text-sm lg:text-base font-medium leading-relaxed max-w-3xl">
+                        {faq.a}
+                    </p>
+                </div>
+            </details>
+        ))}
+    </div>
+</section>
+
+<style is:global>
+    /* Prevent default arrows */
+    summary::-webkit-details-marker {
+        display: none;
+    }
+</style>
+
+<script>
+    import { animate, inView, stagger } from "motion";
+
+    const initFAQ = () => {
+        inView("#faq", () => {
+            animate(
+                ".faq-header",
+                { opacity: 1, y: [30, 0] },
+                { duration: 0.8, easing: [0.22, 1, 0.36, 1] }
+            );
+
+            animate(
+                ".faq-item",
+                { opacity: 1, x: [-20, 0] },
+                { 
+                    duration: 0.6, 
+                    delay: stagger(0.1),
+                    easing: [0.22, 1, 0.36, 1] 
+                }
+            );
+        });
+    };
+
+    document.addEventListener('astro:page-load', initFAQ);
+</script>

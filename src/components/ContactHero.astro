@@ -1,0 +1,34 @@
+---
+// src/components/ContactHero.astro
+---
+
+<section id="contact-hero" class="relative pt-12 lg:pt-24 scroll-mt-24 lg:scroll-mt-32">
+    <div class="space-y-8 max-w-4xl">
+        <p class="hero-label font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px] opacity-0">
+            KONTAKT // SKONTAKTUJ SIĘ Z NAMI
+        </p>
+        <h1
+            class="hero-title text-5xl lg:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-slate-ink opacity-0"
+        >
+            Jesteśmy do Twojej <span class="text-accent-orange">dyspozycji.</span>
+        </h1>
+        <p
+            class="hero-subtitle text-lg lg:text-xl text-slate-ink/70 max-w-2xl font-medium leading-relaxed opacity-0"
+        >
+            Masz pytania dotyczące dachu? Potrzebujesz darmowej wyceny lub fachowej porady? 
+            Zadzwoń do nas lub napisz – chętnie pomożemy w każdej sprawie.
+        </p>
+    </div>
+</section>
+
+<script>
+    import { animate } from "motion";
+
+    const initContactHero = () => {
+        animate(".hero-label", { opacity: 1, y: [10, 0] }, { duration: 0.4, easing: [0.22, 1, 0.36, 1] });
+        animate(".hero-title", { opacity: 1, y: [20, 0] }, { duration: 0.8, delay: 0.1, easing: [0.22, 1, 0.36, 1] });
+        animate(".hero-subtitle", { opacity: 1, y: [20, 0] }, { duration: 0.8, delay: 0.2, easing: [0.22, 1, 0.36, 1] });
+    };
+
+    document.addEventListener('astro:page-load', initContactHero);
+</script>

@@ -1,0 +1,32 @@
+---
+// src/pages/kontakt/index.astro
+import Layout from "../../layouts/Layout.astro";
+import ContactHero from "../../components/ContactHero.astro";
+import ContactDetails from "../../components/ContactDetails.astro";
+import FAQ from "../../components/FAQ.astro";
+import { LocationMap } from "../../components/react/LocationMap";
+import Footer from "../../components/Footer.astro";
+---
+
+<Layout title="Kontakt - SzramaDach Tarnów">
+    <div class="px-5 lg:px-10 max-w-7xl mx-auto">
+        <main class="space-y-24 lg:space-y-40">
+            <ContactHero />
+            <ContactDetails />
+            
+            <!-- Location Map Section -->
+            <section id="mapa" class="relative bg-sheet-white border border-sheet-border technical-sheet-shadow rounded-sm overflow-hidden h-[500px] lg:h-[600px] scroll-mt-24 lg:scroll-mt-32">
+                <div
+                    class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider z-20"
+                >
+                    REF: BIURO_REF_07
+                </div>
+                <LocationMap client:load />
+            </section>
+
+            <FAQ />
+        </main>
+    </div>
+
+    <Footer />
+</Layout>

@@ -1,0 +1,80 @@
+---
+// src/components/ContactDetails.astro
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
+
+const contactMethods = [
+    {
+        icon: Phone,
+        label: "Zadzwoń do nas",
+        value: "+48 500 123 456",
+        href: "tel:+48500123456",
+        desc: "Dostępni pn-pt 7:00-16:00"
+    },
+    {
+        icon: Mail,
+        label: "Napisz wiadomość",
+        value: "biuro@szramadach.pl",
+        href: "mailto:biuro@szramadach.pl",
+        desc: "Odpowiadamy w ciągu 24h"
+    },
+    {
+        icon: MapPin,
+        label: "Odwiedź nas",
+        value: "ul. Krakowska 123, Tarnów",
+        href: "https://maps.google.com/?q=Krakowska+123+Tarnow",
+        desc: "Zapraszamy do biura"
+    }
+];
+---
+
+<section class="mt-24 lg:mt-32">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        {contactMethods.map((method, index) => (
+            <a 
+                href={method.href}
+                class="contact-card group bg-sheet-white border border-sheet-border p-8 rounded-sm technical-sheet-shadow hover:-translate-y-1 hover:shadow-xl transition-all duration-300 opacity-0"
+            >
+                <div class="w-12 h-12 bg-gray-50 border border-sheet-border flex items-center justify-center text-slate-ink group-hover:bg-accent-orange group-hover:text-white group-hover:border-accent-orange transition-all duration-300 mb-6">
+                    <method.icon size={24} />
+                </div>
+                
+                <p class="font-mono text-[10px] uppercase text-accent-orange tracking-widest font-black mb-2">
+                    {method.label}
+                </p>
+                
+                <h3 class="text-xl lg:text-2xl font-black text-slate-ink mb-2 group-hover:text-accent-orange transition-colors">
+                    {method.value}
+                </h3>
+                
+                <p class="text-sm text-slate-ink/50 font-medium">
+                    {method.desc}
+                </p>
+
+                <div class="mt-8 flex items-center gap-2 text-[10px] font-mono font-bold text-slate-ink/30 uppercase tracking-tighter">
+                    <span>REF: CONTACT_DR_{index + 1}</span>
+                    <div class="h-px flex-1 bg-sheet-border"></div>
+                </div>
+            </a>
+        ))}
+    </div>
+</section>
+
+<script>
+    import { animate, inView, stagger } from "motion";
+
+    const initContactDetails = () => {
+        inView(".contact-card", () => {
+            animate(
+                ".contact-card",
+                { opacity: 1, y: [30, 0] },
+                { 
+                    duration: 0.8, 
+                    delay: stagger(0.1),
+                    easing: [0.22, 1, 0.36, 1] 
+                }
+            );
+        });
+    };
+
+    document.addEventListener('astro:page-load', initContactDetails);
+</script>

@@ -125,7 +125,10 @@ export function LocationMap() {
                 }
                 #location-map {
                     filter: grayscale(100%) contrast(1.1) brightness(1.1);
-                    background: #F9FAFB !important; /* Ensure a base color if tiles fail */
+                    min-height: 400px;
+                    width: 100%;
+                    position: relative;
+                    z-index: 1;
                 }
                 /* Ensure Leaflet controls are visible */
                 .leaflet-control-container {
@@ -134,6 +137,20 @@ export function LocationMap() {
                 .leaflet-tile-pane {
                     opacity: 1 !important;
                     visibility: visible !important;
+                    z-index: 1 !important;
+                }
+                /* Fix Tailwind image reset breaking Leaflet tiles */
+                .leaflet-container img {
+                    max-width: none !important;
+                    max-height: none !important;
+                    display: block;
+                }
+                /* Ensure tiles have width/height and are visible */
+                .leaflet-tile {
+                    visibility: visible !important;
+                }
+                .leaflet-container {
+                    background: transparent !important;
                 }
             `}} />
         </div>

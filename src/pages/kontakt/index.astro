@@ -60,13 +60,13 @@ const faqs = [
             {/* HERO SECTION */}
             <section id="contact-hero" class="relative pt-12 lg:pt-24 scroll-mt-24 lg:scroll-mt-32">
                 <div class="space-y-8 max-w-4xl">
-                    <p class="hero-label font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px] opacity-0">
+                    <p class="hero-label font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]">
                         KONTAKT // SKONTAKTUJ SIĘ Z NAMI
                     </p>
-                    <h1 class="hero-title text-5xl lg:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-slate-ink opacity-0">
+                    <h1 class="hero-title text-5xl lg:text-8xl font-black uppercase leading-[0.85] tracking-tighter text-slate-ink">
                         Jesteśmy do Twojej <span class="text-accent-orange">dyspozycji.</span>
                     </h1>
-                    <p class="hero-subtitle text-lg lg:text-xl text-slate-ink/70 max-w-2xl font-medium leading-relaxed opacity-0">
+                    <p class="hero-subtitle text-lg lg:text-xl text-slate-ink/70 max-w-2xl font-medium leading-relaxed">
                         Masz pytania dotyczące dachu? Potrzebujesz darmowej wyceny lub fachowej porady? 
                         Zadzwoń do nas lub napisz – chętnie pomożemy w każdej sprawie.
                     </p>
@@ -79,7 +79,7 @@ const faqs = [
                     {contactMethods.map((method, index) => (
                         <a 
                             href={method.href}
-                            class="contact-card group relative bg-sheet-white border border-sheet-border p-8 rounded-sm technical-sheet-shadow hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 opacity-0 overflow-hidden block"
+                            class="contact-card group relative bg-sheet-white border border-sheet-border p-8 rounded-sm technical-sheet-shadow hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 overflow-hidden block"
                         >
                             <!-- Decorative background index -->
                             <div class="absolute -right-4 -bottom-8 font-black text-8xl text-slate-ink/[0.03] italic pointer-events-none group-hover:text-accent-orange/[0.05] transition-colors duration-500">
@@ -113,7 +113,7 @@ const faqs = [
             </section>
 
             {/* LOCATION MAP SECTION */}
-            <section id="mapa" class="relative bg-sheet-white border border-sheet-border technical-sheet-shadow rounded-sm overflow-hidden h-[500px] lg:h-[600px] scroll-mt-24 lg:scroll-mt-32 opacity-0 map-section">
+            <section id="mapa" class="relative bg-sheet-white border border-sheet-border technical-sheet-shadow rounded-sm overflow-hidden h-[500px] lg:h-[600px] scroll-mt-24 lg:scroll-mt-32 map-section">
                 <div class="absolute -top-[32px] left-8 h-[32px] w-48 bg-sheet-white border border-sheet-border border-b-0 sheet-tab-clip px-4 flex items-center text-[11px] font-mono text-slate-ink font-bold tracking-wider z-20">
                     REF: BIURO_REF_07
                 </div>
@@ -126,7 +126,7 @@ const faqs = [
                     REF: Q&A_DOC_06
                 </div>
 
-                <div class="faq-header space-y-4 mb-12 opacity-0">
+                <div class="faq-header space-y-4 mb-12">
                     <p class="font-mono text-accent-orange font-black uppercase tracking-[0.3em] text-[11px]">
                         06 // CZĘSTE PYTANIA
                     </p>
@@ -137,7 +137,7 @@ const faqs = [
 
                 <div class="space-y-4 max-w-4xl">
                     {faqs.map((faq, index) => (
-                        <details class="faq-item group bg-white border border-sheet-border rounded-sm overflow-hidden opacity-0">
+                        <details class="faq-item group bg-white border border-sheet-border rounded-sm overflow-hidden">
                             <summary class="flex justify-between items-center p-6 cursor-pointer list-none select-none hover:bg-gray-50 transition-colors">
                                 <div class="flex items-center gap-4">
                                     <span class="font-mono text-[10px] text-accent-orange/40 font-black">
@@ -228,13 +228,18 @@ const faqs = [
         }
 
         // Map Section Reveal
+        const mapHeader = document.querySelector(".map-header");
         if (mapSection) {
             inView(".map-section", (info: any) => {
-                animate(
-                    info.target as any,
-                    { opacity: 1, y: [30, 0] },
-                    { duration: 0.8, easing: [0.22, 1, 0.36, 1] } as any
-                );
+                if (mapHeader) {
+                    animate(
+                        mapHeader as any,
+                        { opacity: 1, y: [30, 0] },
+                        { duration: 0.8, easing: [0.22, 1, 0.36, 1] } as any
+                    );
+                }
+                // Notify window that map section is visible (helps Leaflet)
+                window.dispatchEvent(new Event('resize'));
             });
         }
 

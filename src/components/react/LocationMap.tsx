@@ -30,7 +30,7 @@ export function LocationMap() {
 
             map = L.map('location-map', {
                 center: position,
-                zoom: 13,
+                zoom: 16,
                 zoomControl: false,
                 scrollWheelZoom: false
             });
@@ -64,12 +64,21 @@ export function LocationMap() {
             const marker = L.marker(position, { icon: customIcon }).addTo(map);
             
             marker.bindPopup(`
-                    <div class="p-2 font-mono">
-                        <p class="font-black text-slate-ink uppercase text-[11px] mb-1">SZRAMADACH TARNÓW</p>
-                        <p class="text-[10px] text-slate-ink/60">ul. Krakowska 123<br/>33-100 Tarnów</p>
+                    <div class="p-4 font-mono min-w-[200px]">
+                        <p class="font-black text-slate-ink uppercase text-[11px] mb-1">SZRAMADACH DEKARSTWO</p>
+                        <p class="text-[10px] text-slate-ink/60 mb-4">ul. Krakowska 123<br/>33-100 Tarnów</p>
+                        <a 
+                            href="https://www.google.com/maps/dir/?api=1&destination=50.0121,20.9858" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="block w-full text-center bg-accent-orange text-white py-2 text-[10px] font-black uppercase tracking-widest hover:bg-slate-ink transition-colors duration-300 rounded-sm"
+                        >
+                            NAWIGUJ
+                        </a>
                     </div>
                 `, {
-                    offset: [0, -10]
+                    offset: [0, -10],
+                    className: 'technical-popup'
                 })
                 .openPopup();
 
@@ -152,6 +161,14 @@ export function LocationMap() {
                 }
                 .leaflet-container {
                     background: transparent !important;
+                }
+                .leaflet-popup-content-wrapper {
+                    border-radius: 0 !important;
+                    border: 1px solid #E2E8F0 !important;
+                    box-shadow: 10px 10px 0px rgba(0,0,0,0.05) !important;
+                }
+                .leaflet-popup-tip {
+                    display: none !important;
                 }
             `}} />
         </div>

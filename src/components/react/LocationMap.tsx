@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+const NAV_HREF = "https://www.google.com/maps/dir/?api=1&destination=50.0121,20.9858";
+
 export function LocationMap() {
     const [isMounted, setIsMounted] = useState(false);
 
@@ -13,17 +15,12 @@ export function LocationMap() {
         let map: any = null;
 
         const initMap = async () => {
-            // Check if there is already a map instance on this element
             const container = document.getElementById('location-map');
-            if (!container || (container as any)._leaflet_id) {
-                console.log("Map container already initialized or not found.");
-                return;
-            }
+            if (!container || (container as any)._leaflet_id) return;
 
             // @ts-ignore
             const L = await import('leaflet');
-            
-            // Tarnów coordinates
+
             const position: [number, number] = [50.0121, 20.9858];
 
             console.log("Initializing Leaflet map...");
@@ -32,7 +29,9 @@ export function LocationMap() {
                 center: position,
                 zoom: 16,
                 zoomControl: false,
-                scrollWheelZoom: false
+                scrollWheelZoom: false,
+                // Offset center slightly to account for the info card on the left
+                paddingTopLeft: [320, 0],
             });
 
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -41,56 +40,28 @@ export function LocationMap() {
                 maxZoom: 20
             }).addTo(map);
 
-            // Add zoom control to bottom right
-            L.control.zoom({
-                position: 'bottomright'
-            }).addTo(map);
+            // Zoom control bottom right
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-            // Custom technical-looking marker
+            // Custom marker
             const customIcon = L.divIcon({
                 className: 'custom-location-icon',
                 html: `
-                    <div class="relative flex items-center justify-center">
-                        <div class="absolute w-12 h-12 bg-accent-orange/20 rounded-full animate-ping"></div>
-                        <div class="relative w-6 h-6 bg-accent-orange border-4 border-white shadow-xl flex items-center justify-center">
-                            <div class="w-1 h-1 bg-white"></div>
-                        </div>
+                    <div style="position:relative;display:flex;align-items:center;justify-content:center;width:48px;height:48px;">
+                        <div style="position:absolute;width:48px;height:48px;background:rgba(234,88,12,0.15);border-radius:50%;animation:ping 2s cubic-bezier(0,0,0.2,1) infinite;"></div>
+                        <div style="position:relative;width:20px;height:20px;background:#EA580C;border:3px solid white;box-shadow:0 4px 20px rgba(234,88,12,0.4);clip-path:polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"></div>
                     </div>
                 `,
                 iconSize: [48, 48],
-                iconAnchor: [24, 24]
+                iconAnchor: [24, 24],
             });
 
-            const marker = L.marker(position, { icon: customIcon }).addTo(map);
-            
-            marker.bindPopup(`
-                    <div class="p-4 font-mono min-w-[200px]">
-                        <p class="font-black text-slate-ink uppercase text-[11px] mb-1">SZRAMADACH DEKARSTWO</p>
-                        <p class="text-[10px] text-slate-ink/60 mb-4">ul. Krakowska 123<br/>33-100 Tarnów</p>
-                        <a 
-                            href="https://www.google.com/maps/dir/?api=1&destination=50.0121,20.9858" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            class="block w-full text-center bg-accent-orange text-white py-2 text-[10px] font-black uppercase tracking-widest hover:bg-slate-ink transition-colors duration-300 rounded-sm"
-                        >
-                            NAWIGUJ
-                        </a>
-                    </div>
-                `, {
-                    offset: [0, -10],
-                    className: 'technical-popup'
-                })
-                .openPopup();
+            L.marker(position, { icon: customIcon }).addTo(map);
 
-            // Use ResizeObserver to keep map size in sync with container
-            const resizeObserver = new ResizeObserver(() => {
-                if (map) {
-                    map.invalidateSize();
-                }
-            });
+            // Keep size in sync
+            const resizeObserver = new ResizeObserver(() => map?.invalidateSize());
             resizeObserver.observe(container);
 
-            // Multiple attempts to invalidate size (helps with transitions/reveals)
             setTimeout(() => map?.invalidateSize(), 100);
             setTimeout(() => map?.invalidateSize(), 500);
             setTimeout(() => map?.invalidateSize(), 1000);
@@ -99,15 +70,13 @@ export function LocationMap() {
         initMap();
 
         return () => {
-            if (map) {
-                map.remove();
-            }
+            if (map) map.remove();
         };
     }, [isMounted]);
 
     if (!isMounted) {
         return (
-            <div className="w-full h-full bg-gray-50 animate-pulse flex items-center justify-center border border-sheet-border">
+            <div className="w-full h-full bg-gray-50 animate-pulse flex items-center justify-center">
                 <div className="font-mono text-[10px] text-slate-ink/20 uppercase tracking-widest font-black">
                     INITIALIZING_DATA_STREAM...
                 </div>
@@ -117,58 +86,88 @@ export function LocationMap() {
 
     return (
         <div className="relative w-full h-[500px] lg:h-[600px]">
-            <div id="location-map" className="w-full h-full z-10" />
-            
-            {/* Global style for map and marker */}
+            {/* Map renders full width/height */}
+            <div id="location-map" className="absolute inset-0 z-10" />
+
+            {/* Info card overlay — always visible, sits above map */}
+            <div
+                className="absolute top-0 left-0 bottom-0 z-20 w-[280px] lg:w-[300px] bg-white/95 backdrop-blur-sm flex flex-col justify-between p-6 lg:p-8"
+                style={{ borderRight: '1px solid #E2E8F0', boxShadow: '4px 0 30px rgba(0,0,0,0.08)' }}
+            >
+                {/* Header */}
+                <div>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.35em] text-accent-orange font-black mb-4">
+                        04 // LOKALIZACJA
+                    </p>
+                    <h3 className="text-xl font-black uppercase tracking-tight text-slate-ink leading-tight mb-1">
+                        SZRAMADACH
+                    </h3>
+                    <p className="font-mono text-[10px] text-slate-ink/40 uppercase tracking-widest font-bold mb-6">
+                        DEKARSTWO TARNÓW
+                    </p>
+
+                    <div className="space-y-3 text-sm text-slate-ink/70">
+                        <div className="flex items-start gap-3">
+                            <span className="font-mono text-accent-orange text-[9px] font-black uppercase mt-0.5 min-w-[36px]">ADR</span>
+                            <span className="font-medium">ul. Krakowska 123<br />33-100 Tarnów</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <span className="font-mono text-accent-orange text-[9px] font-black uppercase mt-0.5 min-w-[36px]">TEL</span>
+                            <span className="font-medium">+48 500 123 456</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <span className="font-mono text-accent-orange text-[9px] font-black uppercase mt-0.5 min-w-[36px]">HRS</span>
+                            <span className="font-medium">Pon–Pt: 7:00–16:00<br />Sob: 7:00–12:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Navigation CTA */}
+                <div className="space-y-3">
+                    <div className="h-[1px] bg-slate-ink/10 w-full" />
+                    <a
+                        href={NAV_HREF}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between w-full bg-accent-orange text-white px-5 py-4 font-black uppercase tracking-widest text-[11px] hover:bg-slate-ink transition-colors duration-300 group"
+                    >
+                        <span>Otwórz w Mapach</span>
+                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                    <p className="text-center font-mono text-[8px] text-slate-ink/30 uppercase tracking-widest">
+                        Google Maps · Apple Maps · Waze
+                    </p>
+                </div>
+            </div>
+
             <style dangerouslySetInnerHTML={{ __html: `
+                @keyframes ping {
+                    75%, 100% { transform: scale(2); opacity: 0; }
+                }
                 .custom-location-icon {
                     background: none !important;
                     border: none !important;
                 }
-                .leaflet-popup-content-wrapper {
-                    border-radius: 0 !important;
-                    border: 1px solid #D1D5DB !important;
-                    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1) !important;
-                }
-                .leaflet-popup-tip {
-                    background: #FFFFFF !important;
-                    border: 1px solid #D1D5DB !important;
-                }
                 #location-map {
-                    min-height: 400px;
                     width: 100%;
-                    position: relative;
-                    z-index: 1;
+                    height: 100%;
                 }
-                /* Ensure Leaflet controls are visible */
-                .leaflet-control-container {
-                    z-index: 1000 !important;
-                }
-                .leaflet-tile-pane {
-                    opacity: 1 !important;
-                    visibility: visible !important;
-                    z-index: 1 !important;
-                }
-                /* Fix Tailwind image reset breaking Leaflet tiles */
                 .leaflet-container img {
                     max-width: none !important;
                     max-height: none !important;
                     display: block;
                 }
-                /* Ensure tiles have width/height and are visible */
                 .leaflet-tile {
                     visibility: visible !important;
                 }
                 .leaflet-container {
-                    background: transparent !important;
+                    background: #f0f0f0 !important;
                 }
-                .leaflet-popup-content-wrapper {
-                    border-radius: 0 !important;
-                    border: 1px solid #E2E8F0 !important;
-                    box-shadow: 10px 10px 0px rgba(0,0,0,0.05) !important;
-                }
-                .leaflet-popup-tip {
-                    display: none !important;
+                .leaflet-control-container .leaflet-bottom {
+                    bottom: 16px;
+                    right: 16px;
                 }
             `}} />
         </div>
